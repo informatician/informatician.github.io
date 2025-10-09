@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - Umar Ruhi</title>
+    <meta name="description" content="Reflections from the intersections of technology, learning, and life">
+    <link rel="stylesheet" href="css/shared.css">
+    <style>
+        .blog-intro {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: var(--bg-light);
+            border-radius: 8px;
+        }
+
+        .blog-intro h1 {
+            font-family: var(--font-heading);
+            font-size: clamp(2rem, 5vw, 3rem);
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-weight: 400;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+        }
+
+        .blog-intro p {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .substack-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .substack-link:hover {
+            color: var(--primary-color);
+        }
+
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            font-size: 1.2rem;
+            color: var(--text-light);
+        }
+
+        .error {
+            background: #fee;
+            border: 1px solid #fcc;
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .error h3 {
+            color: #c33;
+            margin-bottom: 1rem;
+        }
+
+        .blog-posts {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .blog-card {
+            background: var(--white);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+
+        .blog-card-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: linear-gradient(135deg, var(--bg-light), var(--bg-highlight));
+        }
+
+        .blog-card-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .blog-card-date {
+            font-size: 0.9rem;
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .blog-card-title {
+            font-family: var(--font-accent);
+            font-size: 1.4rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        .blog-card-title a {
+            color: inherit;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .blog-card-title a:hover {
+            color: var(--secondary-color);
+        }
+
+        .blog-card-excerpt {
+            color: var(--text-light);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .blog-card-link {
+            display: inline-flex;
+            align-items: center;
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .blog-card-link:hover {
+            color: var(--primary-color);
+        }
+
+        .blog-card-link::after {
+            content: ' →';
+            margin-left: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .blog-posts {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="header">
+        <div class="banner">
+            <h1>Umar Ruhi</h1>
+            <p class="tagline">Information Systems Professor | Management Consultant | Academic Leader</p>
+        </div>
+    </header>
+    
+    <!-- NAVIGATION -->
+    <nav class="nav-container">
+        <button class="nav-toggle" onclick="toggleNav()">☰</button>
+        <ul class="main-nav" id="mainNav">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="leadership.html">Leadership</a></li>
+            <li><a href="research.html">Research</a></li>
+            <li><a href="teaching.html">Teaching</a></li>
+            <li><a href="consulting.html">Consulting</a></li>
+            <li><a href="corporate-training.html">Corporate Training</a></li>
+            <li><a href="prism-lab.html">PRISM Lab</a></li>
+            <li><a href="blog.html" class="active">Blog</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+    
+    <!-- MAIN CONTENT -->
+    <main class="container">
+        <div class="blog-intro">
+            <h2>Personal Blog: Field Notes from Unmarked Trails</h2>
+            <p>Musings off the map… where thought pauses, pivots, and unfolds.</p>
+            <a href="https://informatician.substack.com/" target="_blank" rel="noopener noreferrer" class="substack-link">
+                Visit on Substack →
+            </a>
+        </div>
+
+        <div id="blogContainer">
+            <div class="loading">Loading latest posts...</div>
+        </div>
+    </main>
+    
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p class="footer-links">
+                <strong>Get In Touch:</strong>
+                <a href="contact.html">Contact Form</a>
+                <span class="footer-separator">|</span>
+                <a href="https://www.linkedin.com/in/umarruhi/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                <span class="footer-separator">|</span>
+                <a href="https://bsky.app/profile/bizdoc.bsky.social" target="_blank" rel="noopener noreferrer">Bluesky</a>
+            </p>
+            <p class="copyright">© 2025 Umar Ruhi. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/shared.js"></script>
+    <script>
+        // Substack RSS Feed URL
+        const SUBSTACK_RSS = 'https://informatician.substack.com/feed';
+        
+        // Function to parse RSS feed
+        async function fetchBlogPosts() {
+            const container = document.getElementById('blogContainer');
+            
+            try {
+                // Use RSS2JSON service to convert RSS to JSON (handles CORS)
+                const response = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(SUBSTACK_RSS)}`);
+                
+                if (!response.ok) {
+                    throw new Error('Failed to fetch blog posts');
+                }
+                
+                const data = await response.json();
+                
+                if (data.status !== 'ok') {
+                    throw new Error('RSS feed error');
+                }
+                
+                displayBlogPosts(data.items);
+                
+            } catch (error) {
+                console.error('Error fetching blog posts:', error);
+                container.innerHTML = `
+                    <div class="error">
+                        <h3>Unable to load blog posts</h3>
+                        <p>Please visit my blog directly on Substack:</p>
+                        <a href="https://informatician.substack.com/" target="_blank" rel="noopener noreferrer" class="substack-link">
+                            The Informatician on Substack →
+                        </a>
+                    </div>
+                `;
+            }
+        }
+        
+        // Function to display blog posts
+        function displayBlogPosts(posts) {
+            const container = document.getElementById('blogContainer');
+            
+            if (!posts || posts.length === 0) {
+                container.innerHTML = '<p class="text-content">No posts available at the moment.</p>';
+                return;
+            }
+            
+            const postsHTML = posts.map(post => {
+                // Try multiple sources for the image
+                let imageUrl = '';
+                
+                // 1. Check enclosure field (Substack cover images)
+                if (post.enclosure && post.enclosure.link) {
+                    imageUrl = post.enclosure.link;
+                }
+                // 2. Check thumbnail field
+                else if (post.thumbnail) {
+                    imageUrl = post.thumbnail;
+                }
+                // 3. Extract first image from content
+                else {
+                    const contentToSearch = post.content || post.description || '';
+                    const imgMatch = contentToSearch.match(/<img[^>]+src="([^">]+)"/);
+                    if (imgMatch) {
+                        imageUrl = imgMatch[1];
+                    }
+                }
+                
+                // Clean excerpt (remove HTML tags)
+                const contentToClean = post.content || post.description || '';
+                const excerpt = contentToClean
+                    .replace(/<[^>]*>/g, '')
+                    .replace(/&nbsp;/g, ' ')
+                    .trim()
+                    .substring(0, 200)
+                    .trim() + '...';
+                
+                // Format date
+                const date = new Date(post.pubDate);
+                const formattedDate = date.toLocaleDateString('en-US', { 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric' 
+                });
+                
+                return `
+                    <article class="blog-card">
+                        ${imageUrl ? `<img src="${imageUrl}" alt="${post.title}" class="blog-card-image" loading="lazy">` : '<div class="blog-card-image"></div>'}
+                        <div class="blog-card-content">
+                            <div class="blog-card-date">${formattedDate}</div>
+                            <h2 class="blog-card-title">
+                                <a href="${post.link}" target="_blank" rel="noopener noreferrer">${post.title}</a>
+                            </h2>
+                            <p class="blog-card-excerpt">${excerpt}</p>
+                            <a href="${post.link}" target="_blank" rel="noopener noreferrer" class="blog-card-link">
+                                Read on Substack
+                            </a>
+                        </div>
+                    </article>
+                `;
+            }).join('');
+            
+            container.innerHTML = `<div class="blog-posts">${postsHTML}</div>`;
+        }
+        
+        // Load posts when page loads
+        fetchBlogPosts();
+    </script>
+</body>
+</html>
