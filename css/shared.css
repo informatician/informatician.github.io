@@ -90,12 +90,21 @@ body {
 
 .nav-toggle {
     display: none;
-    background: none;
-    border: none;
-    color: var(--white);
-    font-size: 1.5rem;
+    background: var(--white);
+    border: 2px solid var(--white);
+    color: var(--primary-color);
+    font-size: 1.8rem;
     cursor: pointer;
-    padding: var(--spacing-md);
+    padding: 0.5rem 0.75rem;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    font-weight: bold;
+    line-height: 1;
+}
+
+.nav-toggle:hover {
+    background: var(--bg-light);
+    transform: scale(1.05);
 }
 
 .main-nav {
@@ -616,13 +625,16 @@ body {
 @media (max-width: 768px) {
     .nav-container {
         position: relative;
+        padding: var(--spacing-sm);
     }
     
     .nav-toggle {
         display: block;
         position: absolute;
-        right: 0;
-        top: 0;
+        right: var(--spacing-md);
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 1001;
     }
     
     .main-nav {
