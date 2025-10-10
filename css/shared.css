@@ -618,24 +618,13 @@ body {
         position: relative;
     }
     
-.nav-toggle {
-    display: none;
-    background: var(--white);
-    border: 2px solid var(--white);
-    color: var(--primary-color);
-    font-size: 1.8rem;
-    cursor: pointer;
-    padding: 0.5rem 0.75rem;
-    border-radius: 4px;
-    transition: all 0.3s ease;
-    font-weight: bold;
-    line-height: 1;
-}
-
-.nav-toggle:hover {
-    background: var(--bg-light);
-    transform: scale(1.05);
-}    
+    .nav-toggle {
+        display: block;
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+    
     .main-nav {
         display: none;
         flex-direction: column;
