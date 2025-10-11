@@ -18,7 +18,7 @@
             border-radius: 8px;
         }
 
-        .blog-intro h1 {
+        .blog-intro h2 {
             font-family: var(--font-heading);
             font-size: clamp(2rem, 5vw, 3rem);
             color: var(--primary-color);
@@ -45,6 +45,41 @@
 
         .substack-link:hover {
             color: var(--primary-color);
+        }
+
+        .refresh-button {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--secondary-color);
+            color: var(--white);
+            border: none;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            font-size: 1rem;
+        }
+
+        .refresh-button:hover {
+            background: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .refresh-button:disabled {
+            background: var(--text-light);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .refresh-button:disabled:hover {
+            background: var(--text-light);
+        }
+
+        .last-updated {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-light);
         }
 
         .loading {
@@ -195,6 +230,11 @@
             <a href="https://informatician.substack.com/" target="_blank" rel="noopener noreferrer" class="substack-link">
                 Visit on Substack →
             </a>
+            <br>
+            <button id="refreshButton" class="refresh-button" onclick="refreshPosts()">
+                🔄 Refresh Posts
+            </button>
+            <div id="lastUpdated" class="last-updated"></div>
         </div>
 
         <div id="blogContainer">
@@ -221,19 +261,58 @@
     </div>
 </footer>  
 
-
     <script src="js/shared.js"></script>
     <script>
         // Substack RSS Feed URL
         const SUBSTACK_RSS = 'https://informatician.substack.com/feed';
         
+        // Function to update last updated time
+        function updateLastUpdatedTime() {
+            const lastUpdatedEl = document.getElementById('lastUpdated');
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('en-US', { 
+                hour: 'numeric', 
+                minute: '2-digit',
+                hour12: true 
+            });
+            lastUpdatedEl.textContent = `Last updated: ${timeString}`;
+        }
+        
+        // Function to refresh posts manually
+        async function refreshPosts() {
+            const button = document.getElementById('refreshButton');
+            const originalText = button.textContent;
+            
+            // Disable button and show loading state
+            button.disabled = true;
+            button.textContent = '⏳ Refreshing...';
+            
+            // Add cache-busting parameter to force fresh fetch
+            const cacheBuster = `&_=${Date.now()}`;
+            
+            try {
+                await fetchBlogPosts(cacheBuster);
+                button.textContent = '✓ Updated!';
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.disabled = false;
+                }, 2000);
+            } catch (error) {
+                button.textContent = '✗ Error';
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.disabled = false;
+                }, 2000);
+            }
+        }
+        
         // Function to parse RSS feed
-        async function fetchBlogPosts() {
+        async function fetchBlogPosts(cacheBuster = '') {
             const container = document.getElementById('blogContainer');
             
             try {
                 // Use RSS2JSON service to convert RSS to JSON (handles CORS)
-                const response = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(SUBSTACK_RSS)}`);
+                const response = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(SUBSTACK_RSS)}${cacheBuster}`);
                 
                 if (!response.ok) {
                     throw new Error('Failed to fetch blog posts');
@@ -246,6 +325,7 @@
                 }
                 
                 displayBlogPosts(data.items);
+                updateLastUpdatedTime();
                 
             } catch (error) {
                 console.error('Error fetching blog posts:', error);
