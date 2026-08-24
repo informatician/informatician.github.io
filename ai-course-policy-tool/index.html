@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>AI Course Policy Selector</title>
+  <meta name="description" content="A faculty-facing decision tool for selecting and configuring a generative AI course policy.">
+  <style>
+    html, body { margin: 0; padding: 0; background: light-dark(#f6f7f9,#111418); }
+    body { min-width: 320px; }
+  </style>
+</head>
+<body>
+<div id="ai-policy-selector" style="background-color:light-dark(#f6f7f9,#111418);color:light-dark(#18202a,#eef2f6);border-radius:0;min-height:100%;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
+<style>
+#ai-policy-selector{--bg:light-dark(#f6f7f9,#111418);--panel:light-dark(#ffffff,#1a1f25);--panel2:light-dark(#f0f3f6,#21272f);--text:light-dark(#18202a,#eef2f6);--muted:light-dark(#5f6b78,#aab3bd);--border:light-dark(#d9dee5,#343c46);--accent:light-dark(#365f8d,#8bb8e8);--accentSoft:light-dark(#eaf1f8,#1d3044);--good:light-dark(#2d6848,#84cca5);--warn:light-dark(#8b5a16,#e9bc70);--danger:light-dark(#873c43,#e69aa1);padding:clamp(18px,3vw,34px)}
+#ai-policy-selector *{box-sizing:border-box}#ai-policy-selector .wrap{max-width:1120px;margin:0 auto}#ai-policy-selector .intro{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(260px,.6fr);gap:22px;align-items:start;margin-bottom:24px}#ai-policy-selector h1,#ai-policy-selector h2,#ai-policy-selector h3,#ai-policy-selector p{margin-top:0}#ai-policy-selector h1{font-size:clamp(28px,4vw,46px);line-height:1.05;letter-spacing:-.035em;margin-bottom:12px}#ai-policy-selector .lede{font-size:17px;line-height:1.6;color:var(--muted);max-width:760px}#ai-policy-selector .principle{background:var(--panel);border:1px solid var(--border);padding:18px;border-radius:16px;font-size:14px;line-height:1.55}#ai-policy-selector .principle strong{display:block;margin-bottom:6px;color:var(--text)}#ai-policy-selector .step{background:var(--panel);border:1px solid var(--border);border-radius:18px;margin:18px 0;overflow:hidden}#ai-policy-selector .stepHead{padding:20px 22px;border-bottom:1px solid var(--border);display:flex;gap:14px;align-items:flex-start}#ai-policy-selector .num{width:32px;height:32px;flex:none;border-radius:50%;display:grid;place-items:center;background:var(--accentSoft);color:var(--accent);font-weight:800}#ai-policy-selector .stepHead h2{font-size:20px;margin-bottom:4px}#ai-policy-selector .stepHead p{margin:0;color:var(--muted);font-size:14px;line-height:1.45}#ai-policy-selector .body{padding:22px}#ai-policy-selector fieldset{border:0;margin:0 0 22px;padding:0}#ai-policy-selector legend{font-weight:750;margin-bottom:10px;font-size:15px}#ai-policy-selector .hint{display:block;font-size:13px;color:var(--muted);font-weight:400;margin-top:3px}#ai-policy-selector .choices{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}#ai-policy-selector .choices.two{grid-template-columns:repeat(2,minmax(0,1fr))}#ai-policy-selector label.option{position:relative;display:flex;align-items:flex-start;gap:9px;padding:12px;border:1px solid var(--border);border-radius:12px;background:var(--panel2);cursor:pointer;min-height:48px;line-height:1.35;font-size:14px}#ai-policy-selector label.option:has(input:checked){border-color:var(--accent);background:var(--accentSoft)}#ai-policy-selector input[type=radio],#ai-policy-selector input[type=checkbox]{margin-top:2px;accent-color:var(--accent);width:18px;height:18px;flex:none}#ai-policy-selector button,#ai-policy-selector select,#ai-policy-selector input[type=text]{font:inherit}#ai-policy-selector button{min-height:44px;border-radius:11px;border:1px solid var(--border);padding:10px 15px;background:var(--panel2);color:var(--text);font-weight:700;cursor:pointer}#ai-policy-selector button.primary{background:var(--accent);color:light-dark(#fff,#0f1720);border-color:transparent}#ai-policy-selector button.ghost{background:transparent}#ai-policy-selector button:focus-visible,#ai-policy-selector input:focus-visible,#ai-policy-selector select:focus-visible{outline:3px solid color-mix(in srgb,var(--accent) 45%,transparent);outline-offset:2px}#ai-policy-selector .actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}#ai-policy-selector .validation{font-size:13px;color:var(--danger);margin-top:10px;min-height:19px}#ai-policy-selector .recommendations{display:none;margin-top:22px}#ai-policy-selector .recommendations.show{display:block}#ai-policy-selector .recGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}#ai-policy-selector .recCard{border:1px solid var(--border);border-radius:15px;padding:17px;background:var(--panel2);position:relative}#ai-policy-selector .recCard.primaryRec{border-color:var(--accent)}#ai-policy-selector .tag{display:inline-block;border-radius:999px;padding:4px 9px;background:var(--accentSoft);color:var(--accent);font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.055em;margin-bottom:10px}#ai-policy-selector .recCard h3{font-size:18px;margin-bottom:7px}#ai-policy-selector .recCard p{font-size:14px;line-height:1.5;color:var(--muted)}#ai-policy-selector .why{margin:10px 0 14px;padding-left:18px;font-size:13px;line-height:1.5;color:var(--muted)}#ai-policy-selector .selectArch{width:100%;display:flex;align-items:center;gap:8px;padding-top:10px;border-top:1px solid var(--border);font-size:14px;font-weight:700}#ai-policy-selector details{margin-top:14px;border:1px solid var(--border);border-radius:12px;padding:12px 14px;background:var(--panel2)}#ai-policy-selector summary{cursor:pointer;font-weight:700}#ai-policy-selector .allGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}#ai-policy-selector .mini{padding:10px;border-top:1px solid var(--border);font-size:13px;line-height:1.45}.mini:first-child,.mini:nth-child(2){border-top:0}#ai-policy-selector .mini strong{display:block;margin-bottom:3px}#ai-policy-selector .disabledNote{color:var(--muted);font-size:14px}#ai-policy-selector .assessmentList{display:grid;gap:10px}#ai-policy-selector .assessmentRow{display:grid;grid-template-columns:minmax(180px,1fr) minmax(220px,1.1fr) auto;gap:10px;align-items:center}#ai-policy-selector input[type=text],#ai-policy-selector select{width:100%;min-height:44px;border-radius:10px;border:1px solid var(--border);padding:9px 11px;background:var(--panel2);color:var(--text);font-size:16px}#ai-policy-selector .remove{width:44px;padding:0;font-size:18px}#ai-policy-selector .levelKey{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin:16px 0}#ai-policy-selector .level{border-left:3px solid var(--border);padding:7px 9px;font-size:12px;line-height:1.4;color:var(--muted)}#ai-policy-selector .level strong{display:block;color:var(--text);margin-bottom:2px}#ai-policy-selector .clauseGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}#ai-policy-selector .clause{border:1px solid var(--border);border-radius:12px;padding:12px;background:var(--panel2)}#ai-policy-selector .clause label{display:flex;gap:9px;align-items:flex-start;font-size:14px;font-weight:700;cursor:pointer}#ai-policy-selector .clause p{margin:6px 0 0 27px;font-size:12px;line-height:1.45;color:var(--muted)}#ai-policy-selector .recommended{font-size:10px;color:var(--good);font-weight:800;text-transform:uppercase;letter-spacing:.04em;margin-left:5px}#ai-policy-selector .blueprint{background:light-dark(#eef2f5,#151a20);border:1px solid var(--border);border-radius:15px;padding:18px;white-space:pre-wrap;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px;line-height:1.58;max-height:620px;overflow:auto}#ai-policy-selector .empty{color:var(--muted);font-family:inherit}#ai-policy-selector .footerNote{font-size:12px;color:var(--muted);line-height:1.5;margin-top:12px}@media(max-width:760px){#ai-policy-selector .intro{grid-template-columns:1fr}#ai-policy-selector .choices,#ai-policy-selector .choices.two,#ai-policy-selector .recGrid,#ai-policy-selector .allGrid,#ai-policy-selector .clauseGrid{grid-template-columns:1fr}#ai-policy-selector .assessmentRow{grid-template-columns:1fr}#ai-policy-selector .remove{width:100%}#ai-policy-selector .levelKey{grid-template-columns:1fr 1fr}#ai-policy-selector .body,#ai-policy-selector .stepHead{padding:17px}}
+</style>
+<div class="wrap">
+  <section class="intro">
+    <div>
+      <h1>Build a course AI policy from pedagogy first.</h1>
+      <p class="lede">Answer six short questions to identify the course-policy archetypes that best fit your teaching context. Then set assessment-level overrides and add the responsibility clauses your course requires.</p>
+    </div>
+    <aside class="principle"><strong>Core design principle</strong>Start with what students need to learn and demonstrate. The appropriate role of generative AI follows from those learning and assessment requirements. Information risk primarily adds guardrails, rather than determining the course archetype by itself.</aside>
+  </section>
+
+  <section class="step">
+    <div class="stepHead"><div class="num">1</div><div><h2>Course profile and archetype recommendation</h2><p>The selector recommends a primary archetype and one useful alternative. The recommendation is advisory.</p></div></div>
+    <div class="body">
+      <form id="profileForm">
+        <fieldset><legend>Course level</legend><div class="choices">
+          <label class="option"><input type="radio" name="level" value="intro">Introductory / first-year</label>
+          <label class="option"><input type="radio" name="level" value="upper">Upper-year undergraduate</label>
+          <label class="option"><input type="radio" name="level" value="grad">Graduate / professional</label>
+        </div></fieldset>
+
+        <fieldset><legend>Dominant learning objective <span class="hint">Choose the objective that most strongly shapes assessment design.</span></legend><div class="choices two">
+          <label class="option"><input type="radio" name="objective" value="foundation">Build independent foundational competence</label>
+          <label class="option"><input type="radio" name="objective" value="judgment">Apply disciplinary concepts and exercise judgment</label>
+          <label class="option"><input type="radio" name="objective" value="professional">Develop authentic professional practice</label>
+          <label class="option"><input type="radio" name="objective" value="ai">Develop AI literacy, fluency, or AI-enabled practice</label>
+        </div></fieldset>
+
+        <fieldset><legend>Importance of students performing core skills without AI</legend><div class="choices">
+          <label class="option"><input type="radio" name="foundation" value="high">High, independent performance is essential</label>
+          <label class="option"><input type="radio" name="foundation" value="medium">Moderate, some skills should remain independent</label>
+          <label class="option"><input type="radio" name="foundation" value="low">Low, tool-supported performance is acceptable</label>
+        </div></fieldset>
+
+        <fieldset><legend>Assessment profile <span class="hint">Select all that materially characterize the course.</span></legend><div class="choices two">
+          <label class="option"><input type="checkbox" name="assess" value="exam">Exams, quizzes, or tightly controlled tasks</label>
+          <label class="option"><input type="checkbox" name="assess" value="quant">Problem sets, calculations, or technical exercises</label>
+          <label class="option"><input type="checkbox" name="assess" value="individual">Individual writing, cases, or analytical work</label>
+          <label class="option"><input type="checkbox" name="assess" value="project">Projects, presentations, or group work</label>
+          <label class="option"><input type="checkbox" name="assess" value="authentic">Professional or client-style deliverables</label>
+          <label class="option"><input type="checkbox" name="assess" value="experimental">AI-enabled, innovation, or experimental tasks</label>
+        </div></fieldset>
+
+        <fieldset><legend>Professional relevance of competent AI use</legend><div class="choices">
+          <label class="option"><input type="radio" name="professional" value="low">Low</label>
+          <label class="option"><input type="radio" name="professional" value="medium">Moderate</label>
+          <label class="option"><input type="radio" name="professional" value="high">High</label>
+        </div></fieldset>
+
+        <fieldset><legend>Information and material risk <span class="hint">Select any categories students may encounter.</span></legend><div class="choices two">
+          <label class="option"><input type="checkbox" name="risk" value="public">Primarily public or low-risk information</label>
+          <label class="option"><input type="checkbox" name="risk" value="copyright">Copyrighted, licensed, case, or instructor-provided material</label>
+          <label class="option"><input type="checkbox" name="risk" value="confidential">Personal, confidential, proprietary, or sensitive information</label>
+          <label class="option"><input type="checkbox" name="risk" value="external">External partners, clients, or organizational data</label>
+        </div></fieldset>
+
+        <div class="actions"><button class="primary" type="submit">Recommend archetypes</button><button class="ghost" type="button" id="resetBtn">Reset</button></div>
+        <div id="validation" class="validation" aria-live="polite"></div>
+      </form>
+
+      <div id="recommendations" class="recommendations" aria-live="polite">
+        <div id="recGrid" class="recGrid"></div>
+        <details><summary>See all six archetypes at a glance</summary><div id="allGrid" class="allGrid"></div></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="step" id="assessmentStep">
+    <div class="stepHead"><div class="num">2</div><div><h2>Assessment-level overrides</h2><p>A course-level archetype establishes the default. Individual assessments can apply a different AI level when their learning purpose requires it.</p></div></div>
+    <div class="body">
+      <div id="assessmentDisabled" class="disabledNote">Complete Step 1 and choose an archetype first.</div>
+      <div id="assessmentControls" hidden>
+        <div class="levelKey">
+          <div class="level"><strong>No AI</strong>Independent completion.</div>
+          <div class="level"><strong>Learning / Planning</strong>Study support, ideation, outlining, or feedback only.</div>
+          <div class="level"><strong>AI Collaboration</strong>AI may contribute to production, with disclosure and verification.</div>
+          <div class="level"><strong>Extensive AI</strong>Substantial AI-assisted production is permitted or expected.</div>
+          <div class="level"><strong>AI Exploration</strong>Students choose tools and extent of use, with accountability.</div>
+        </div>
+        <div id="assessmentList" class="assessmentList"></div>
+        <div class="actions" style="margin-top:12px"><button type="button" id="addAssessment">Add assessment</button></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="step" id="clauseStep">
+    <div class="stepHead"><div class="num">3</div><div><h2>Cross-cutting clauses</h2><p>Select responsibility clauses that should apply regardless of the archetype. Some are preselected as a suggested starting point.</p></div></div>
+    <div class="body">
+      <div id="clauseDisabled" class="disabledNote">Complete Step 1 and choose an archetype first.</div>
+      <div id="clauseControls" hidden><div id="clauseGrid" class="clauseGrid"></div></div>
+    </div>
+  </section>
+
+  <section class="step">
+    <div class="stepHead"><div class="num">4</div><div><h2>Policy configuration</h2><p>This working draft combines the selected course archetype, assessment overrides, and common clauses. Edit it to align with institutional requirements and the specific course.</p></div></div>
+    <div class="body"><div id="blueprint" class="blueprint"><span class="empty">Your policy configuration will appear here after Step 1.</span></div><p class="footerNote">Disclosure and citation serve different purposes. Disclosure explains how AI participated in producing the work. Citation identifies a source or object relied upon in the work. A course may require one, both, or neither depending on the assessment.</p></div>
+  </section>
+</div>
+<script>
+(()=>{
+const root=document.getElementById('ai-policy-selector');
+if(root.dataset.ready)return;root.dataset.ready='1';
+const archetypes={
+ human:{name:'Human-First Foundations',short:'Protect independent development and demonstration of foundational capabilities.',core:'Generative AI is generally not used to perform the intellectual work that the course or assessment is designed to develop and evaluate.',sample:'Generative AI use in this course is generally not permitted for completing assessed work when the purpose of the assessment is to demonstrate independent mastery of core skills. Specific exceptions will be identified by the instructor.'},
+ specific:{name:'Assessment-Specific AI',short:'Set AI permissions according to the purpose of each assessment.',core:'There is no single course-wide permission level. Each assessment states the degree and type of AI assistance permitted.',sample:'Generative AI permissions vary across assessments in this course because different assessments develop and evaluate different capabilities. Each assignment will identify the level of AI assistance permitted.'},
+ assistant:{name:'AI as Learning Assistant, Not Author',short:'Permit AI for learning support while protecting the student’s substantive intellectual contribution.',core:'AI may support understanding, planning, practice, and feedback, but should not replace the reasoning or production being assessed.',sample:'You may use generative AI as a learning and feedback tool for activities such as explanation, brainstorming, outlining, practice, and feedback. Unless specifically permitted, AI should not produce the substantive analysis, argument, recommendation, or final response submitted for assessment.'},
+ transparent:{name:'Transparent AI Collaboration',short:'Permit meaningful AI contribution while requiring visible human judgment and transparent use.',core:'AI can contribute to production, but students remain responsible for quality, evidence, reasoning, verification, and disclosure.',sample:'Generative AI may support brainstorming, drafting, analysis, feedback, and revision unless an assessment states otherwise. You remain responsible for the intellectual quality and accuracy of everything you submit, and substantive AI use must be disclosed.'},
+ integrated:{name:'AI-Integrated Professional Practice',short:'Treat competent, critical AI use as part of the professional capability being developed.',core:'Students are expected to learn when and how to use AI effectively, critically, responsibly, and transparently.',sample:'Generative AI is an expected part of learning in this course where specified. Effective use includes selecting appropriate tools, designing productive workflows, evaluating outputs, verifying claims and calculations, and exercising professional judgment about when AI should or should not be used.'},
+ exploration:{name:'AI Exploration and Human Accountability',short:'Allow broad student choice in AI use while maintaining strong responsibility for the final work.',core:'Students may determine the extent of AI assistance, provided they can explain, defend, verify, and take responsibility for the work.',sample:'You may use generative AI tools in completing work for this course unless an assessment specifies otherwise. You remain fully responsible for the work submitted and should be able to explain, defend, modify, and critically evaluate it, including material produced with AI assistance.'}
+};
+const order=['human','specific','assistant','transparent','integrated','exploration'];
+const levelText={none:'No AI',learning:'Learning / Planning Only',collab:'AI Collaboration',extensive:'Extensive AI',explore:'AI Exploration'};
+const levelClause={
+ none:'Generative AI is not permitted in completing this assessment unless the instructor explicitly authorizes an exception.',
+ learning:'Generative AI may be used for learning support, brainstorming, planning, explanation, or feedback, but not to produce substantive content submitted for assessment.',
+ collab:'Generative AI may contribute to the development of the submission. Students remain responsible for verification, judgment, and any required disclosure.',
+ extensive:'Substantial AI-assisted production is permitted or expected. Students remain responsible for the quality and accuracy of the work and should document their AI-enabled process when requested.',
+ explore:'Students may choose the tools and extent of AI assistance. They remain responsible for verifying the work and for explaining and defending their decisions and final submission.'
+};
+const clauses={
+ disclosure:{name:'AI Use Disclosure',desc:'Explain when and how AI contributed to producing the work.',text:'When generative AI contributes substantively to assessed work, include a brief AI Use Statement identifying the tool, how it was used, and which aspects of the work it influenced.'},
+ citation:{name:'Citation when AI is a source or object',desc:'Use citation when AI output itself is relied upon as a source, evidence, or object of analysis.',text:'Disclosure of AI use does not replace citation. When AI-generated content is treated as a source, evidence, or object of analysis, cite or document it in the manner specified for the assessment and required citation style.'},
+ verify:{name:'Verification and human accountability',desc:'Students remain accountable for facts, calculations, references, assumptions, and analysis.',text:'You are responsible for independently evaluating and verifying AI-assisted content, including factual claims, calculations, references, quotations, assumptions, and recommendations. The use of AI does not transfer responsibility for errors to the tool.'},
+ confidential:{name:'Confidential and sensitive information',desc:'Do not expose personal, proprietary, client, or confidential information to unapproved AI systems.',text:'Do not enter personal, confidential, proprietary, client, or otherwise sensitive information into generative AI systems unless the specific tool and use have been authorized for that information.'},
+ copyright:{name:'Copyrighted and licensed materials',desc:'Protect cases, readings, datasets, assessments, and instructor-provided materials.',text:'Do not upload copyrighted, licensed, subscription-based, assessment, or instructor-provided materials to external AI systems unless you have permission to do so and the intended use is consistent with applicable institutional and licensing requirements.'},
+ bias:{name:'Bias and representational limitations',desc:'Require critical review of potentially biased or incomplete AI output.',text:'AI-generated outputs may reproduce bias, omit relevant perspectives, or present culturally and contextually inappropriate assumptions. Evaluate outputs critically and consider whose perspectives or interests may be absent or misrepresented.'},
+ access:{name:'Access, equity, and approved tools',desc:'Avoid requiring paid or inaccessible systems without an equitable alternative.',text:'When AI use is required, the course will identify acceptable tools or access arrangements. Students should not be required to purchase an AI subscription or surrender unnecessary personal data to complete assessed work without an appropriate alternative.'},
+ defend:{name:'Explainability and ability to defend the work',desc:'Students should be able to explain and modify work submitted in their name.',text:'You should be able to explain the reasoning, methods, evidence, and decisions represented in work you submit, including any material developed with AI assistance, and to revise or defend that work when asked.'}
+};
+let selectedArch=null;let lastProfile=null;let assessments=[];
+const profileForm=root.querySelector('#profileForm'),validation=root.querySelector('#validation'),recBox=root.querySelector('#recommendations'),recGrid=root.querySelector('#recGrid'),allGrid=root.querySelector('#allGrid');
+function checked(name){return [...profileForm.querySelectorAll(`input[name="${name}"]:checked`)].map(x=>x.value)}
+function one(name){const x=profileForm.querySelector(`input[name="${name}"]:checked`);return x?x.value:null}
+function collect(){return{level:one('level'),objective:one('objective'),foundation:one('foundation'),assess:checked('assess'),professional:one('professional'),risk:checked('risk')}}
+function valid(p){return p.level&&p.objective&&p.foundation&&p.assess.length&&p.professional&&p.risk.length}
+function scores(p){const s=Object.fromEntries(order.map(k=>[k,0]));
+ const add=(k,n)=>s[k]+=n;
+ if(p.level==='intro'){add('human',3);add('assistant',2);add('specific',1)}
+ if(p.level==='upper'){add('specific',2);add('assistant',1);add('transparent',2);add('integrated',1)}
+ if(p.level==='grad'){add('transparent',2);add('integrated',2);add('exploration',2);add('specific',1)}
+ if(p.objective==='foundation'){add('human',5);add('assistant',2)}
+ if(p.objective==='judgment'){add('specific',2);add('assistant',2);add('transparent',2)}
+ if(p.objective==='professional'){add('transparent',2);add('integrated',4);add('specific',1)}
+ if(p.objective==='ai'){add('integrated',5);add('exploration',2);add('transparent',1)}
+ if(p.foundation==='high'){add('human',5);add('assistant',2);add('specific',1)}
+ if(p.foundation==='medium'){add('specific',2);add('assistant',2);add('transparent',1)}
+ if(p.foundation==='low'){add('transparent',2);add('integrated',2);add('exploration',3)}
+ p.assess.forEach(a=>{if(a==='exam'){add('human',3);add('specific',2)}if(a==='quant'){add('human',2);add('specific',2);add('assistant',1)}if(a==='individual'){add('assistant',2);add('transparent',2);add('specific',1)}if(a==='project'){add('specific',2);add('transparent',3);add('integrated',2)}if(a==='authentic'){add('transparent',2);add('integrated',3)}if(a==='experimental'){add('integrated',3);add('exploration',4)}});
+ if(p.assess.length>=3)add('specific',4);
+ if(p.professional==='low'){add('human',1);add('assistant',2)}if(p.professional==='medium'){add('specific',1);add('transparent',2);add('integrated',1)}if(p.professional==='high'){add('transparent',2);add('integrated',4);add('exploration',1)}
+ if(p.risk.includes('copyright'))add('specific',1);if(p.risk.includes('confidential')||p.risk.includes('external')){add('specific',2);add('assistant',1)}
+ return s}
+function reasons(k,p){const r=[];
+ if(k==='human'){if(p.foundation==='high')r.push('Independent mastery of core skills is a high priority.');if(p.level==='intro')r.push('The course is introductory, where foundational capability development often needs greater protection.');if(p.assess.includes('exam')||p.assess.includes('quant'))r.push('Controlled or technical assessments benefit from clearly protected independent performance.')}
+ if(k==='specific'){if(p.assess.length>=3)r.push('The course uses varied assessment types with different learning purposes.');if(p.assess.includes('exam')&&(p.assess.includes('project')||p.assess.includes('authentic')))r.push('Some assessments call for independent performance while others can accommodate AI-supported work.');if(p.risk.some(x=>['copyright','confidential','external'].includes(x)))r.push('Assessment-specific boundaries can help manage information and material risks.')}
+ if(k==='assistant'){if(p.foundation!=='low')r.push('Students still need to develop disciplinary capability while benefiting from AI-supported learning.');if(p.assess.includes('individual')||p.assess.includes('quant'))r.push('AI can support explanation, practice, planning, or feedback without replacing the substantive work being assessed.');if(p.professional==='low'||p.professional==='medium')r.push('AI competency is useful, but it is not the dominant professional outcome of the course.')}
+ if(k==='transparent'){if(p.objective==='judgment'||p.objective==='professional')r.push('The course emphasizes applied judgment rather than only independent procedural performance.');if(p.assess.includes('individual')||p.assess.includes('project')||p.assess.includes('authentic'))r.push('Applied analytical and project work can accommodate meaningful AI contribution with disclosure and verification.');if(p.professional!=='low')r.push('AI-supported work has some professional relevance.')}
+ if(k==='integrated'){if(p.objective==='ai')r.push('AI capability is itself a learning objective.');if(p.objective==='professional')r.push('Authentic professional practice is a central learning goal.');if(p.professional==='high')r.push('Competent AI use is highly relevant to professional practice.');if(p.assess.includes('authentic')||p.assess.includes('experimental'))r.push('Authentic or AI-enabled assessments support deliberate integration of AI workflows.')}
+ if(k==='exploration'){if(p.level==='grad')r.push('Advanced learners may be ready for greater autonomy in choosing tools and workflows.');if(p.foundation==='low')r.push('Independent tool-free performance is not a dominant capability requirement.');if(p.assess.includes('experimental'))r.push('Experimental assessments can make tool choice and AI strategy part of the learning experience.')}
+ return r.length?r.slice(0,3):['This archetype provides a useful alternative balance between AI assistance, student autonomy, and demonstrable learning.']}
+function renderAll(){allGrid.innerHTML=order.map(k=>`<div class="mini"><strong>${archetypes[k].name}</strong>${archetypes[k].short}</div>`).join('')}
+renderAll();
+function recommend(p){const s=scores(p),rank=order.slice().sort((a,b)=>s[b]-s[a]);renderRecommendations(rank.slice(0,2),p)}
+function renderRecommendations(keys,p){recGrid.innerHTML=keys.map((k,i)=>`<article class="recCard ${i===0?'primaryRec':''}"><span class="tag">${i===0?'Primary fit':'Alternative'}</span><h3>${archetypes[k].name}</h3><p>${archetypes[k].short}</p><ul class="why">${reasons(k,p).map(x=>`<li>${x}</li>`).join('')}</ul><label class="selectArch"><input type="radio" name="archChoice" value="${k}" ${i===0?'checked':''}> Use this as the course-level archetype</label></article>`).join('');recBox.classList.add('show');selectedArch=keys[0];recGrid.querySelectorAll('input[name=archChoice]').forEach(x=>x.addEventListener('change',()=>{selectedArch=x.value;enableBuilders();setClauseDefaults();updateBlueprint()}));enableBuilders();setClauseDefaults();updateBlueprint()}
+profileForm.addEventListener('submit',e=>{e.preventDefault();const p=collect();if(!valid(p)){validation.textContent='Please answer all six areas before generating a recommendation.';return}validation.textContent='';lastProfile=p;recommend(p)});
+root.querySelector('#resetBtn').addEventListener('click',()=>{profileForm.reset();validation.textContent='';recBox.classList.remove('show');selectedArch=null;lastProfile=null;assessments=[];root.querySelector('#assessmentControls').hidden=true;root.querySelector('#assessmentDisabled').hidden=false;root.querySelector('#clauseControls').hidden=true;root.querySelector('#clauseDisabled').hidden=false;root.querySelector('#blueprint').innerHTML='<span class="empty">Your policy configuration will appear here after Step 1.</span>'});
+function enableBuilders(){root.querySelector('#assessmentDisabled').hidden=true;root.querySelector('#assessmentControls').hidden=false;root.querySelector('#clauseDisabled').hidden=true;root.querySelector('#clauseControls').hidden=false;if(!assessments.length){assessments=[{name:'',level:'learning'}];renderAssessments()}renderClauses()}
+function renderAssessments(){const list=root.querySelector('#assessmentList');list.innerHTML='';assessments.forEach((a,i)=>{const row=document.createElement('div');row.className='assessmentRow';row.innerHTML=`<input type="text" aria-label="Assessment name" placeholder="e.g., Individual case analysis" value="${escapeHtml(a.name)}"><select aria-label="AI level for assessment"><option value="none">No AI</option><option value="learning">Learning / Planning Only</option><option value="collab">AI Collaboration</option><option value="extensive">Extensive AI</option><option value="explore">AI Exploration</option></select><button type="button" class="remove" aria-label="Remove assessment">×</button>`;row.querySelector('select').value=a.level;row.querySelector('input').addEventListener('input',e=>{assessments[i].name=e.target.value;updateBlueprint()});row.querySelector('select').addEventListener('change',e=>{assessments[i].level=e.target.value;updateBlueprint()});row.querySelector('.remove').addEventListener('click',()=>{assessments.splice(i,1);renderAssessments();updateBlueprint()});list.appendChild(row)})}
+root.querySelector('#addAssessment').addEventListener('click',()=>{if(assessments.length>=12)return;assessments.push({name:'',level:'learning'});renderAssessments();updateBlueprint()});
+function escapeHtml(s){return String(s).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
+function suggestedClauses(){const set=new Set(['verify']);if(['assistant','transparent','integrated','exploration','specific'].includes(selectedArch))set.add('disclosure');if(['transparent','integrated','exploration'].includes(selectedArch))set.add('defend');if(['integrated','exploration'].includes(selectedArch)){set.add('bias');set.add('access')}if(lastProfile){if(lastProfile.risk.includes('copyright'))set.add('copyright');if(lastProfile.risk.includes('confidential')||lastProfile.risk.includes('external'))set.add('confidential')}return set}
+function renderClauses(){const sug=suggestedClauses(),grid=root.querySelector('#clauseGrid');grid.innerHTML=Object.entries(clauses).map(([k,c])=>`<div class="clause"><label><input type="checkbox" name="clause" value="${k}" ${sug.has(k)?'checked':''}> <span>${c.name}${sug.has(k)?'<span class="recommended">Suggested</span>':''}</span></label><p>${c.desc}</p></div>`).join('');grid.querySelectorAll('input[name=clause]').forEach(x=>x.addEventListener('change',updateBlueprint))}
+function setClauseDefaults(){if(root.querySelector('#clauseControls').hidden)return;renderClauses()}
+function profileSummary(p){if(!p)return'';const L={intro:'Introductory / first-year',upper:'Upper-year undergraduate',grad:'Graduate / professional'};const O={foundation:'Independent foundational competence',judgment:'Disciplinary application and judgment',professional:'Authentic professional practice',ai:'AI literacy or AI-enabled practice'};const F={high:'High',medium:'Moderate',low:'Low'};const P={low:'Low',medium:'Moderate',high:'High'};return `Course level: ${L[p.level]}
+Dominant objective: ${O[p.objective]}
+Need for independent tool-free performance: ${F[p.foundation]}
+Professional relevance of AI: ${P[p.professional]}`}
+function updateBlueprint(){const out=root.querySelector('#blueprint');if(!selectedArch||!lastProfile){out.innerHTML='<span class="empty">Your policy configuration will appear here after Step 1.</span>';return}const selected=[...root.querySelectorAll('input[name=clause]:checked')].map(x=>x.value);let txt=`COURSE AI POLICY CONFIGURATION
+
+COURSE PROFILE
+${profileSummary(lastProfile)}
+
+COURSE-LEVEL ARCHETYPE
+${archetypes[selectedArch].name}
+${archetypes[selectedArch].core}
+
+SUGGESTED COURSE-LEVEL WORDING
+${archetypes[selectedArch].sample}
+`;
+ const named=assessments.filter(a=>a.name.trim());if(named.length){txt+='\nASSESSMENT-LEVEL OVERRIDES\n';named.forEach(a=>{txt+=`\n${a.name.trim()} — ${levelText[a.level]}\n${levelClause[a.level]}\n`})}else{txt+='\nASSESSMENT-LEVEL OVERRIDES\nAdd named assessments in Step 2 to specify exceptions to the course-level default.\n'}
+ if(selected.length){txt+='\nCROSS-CUTTING CLAUSES\n';selected.forEach(k=>{txt+=`\n${clauses[k].name}\n${clauses[k].text}\n`})}
+ txt+='\nIMPLEMENTATION NOTE\nState clearly which rule governs when the course-level archetype and an assessment-specific instruction differ. Assessment-specific instructions should normally take precedence for that assessment.';out.textContent=txt}
+})();
+</script>
+</div>
+</body>
+</html>
