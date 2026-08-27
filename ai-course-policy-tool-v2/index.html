@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light dark">
-  <title>AI Course Policy Selector</title>
-  <meta name="description" content="AI Course Policy Selector with a streamlined contextual landing page and direct start button.">
+  <title>Course AI Policy Builder | CAPP Framework</title>
+  <meta name="description" content="Course AI Policy Builder, an interactive tool based on the Course AI Policy Patterns (CAPP) Framework for course-level generative AI policy design.">
   <style>
     html, body { margin: 0; padding: 0; background: light-dark(#f6f7f9,#111418); }
     body { min-width: 320px; }
@@ -25,12 +25,16 @@
 #landingPage .lpFooterDetailsBody p:last-child{margin-bottom:0}
 #landingPage .lpFooterDetailsBody strong{color:var(--lp-text)}
 
+
+#landingPage .lpFrameworkLine{margin:-4px 0 0;font-size:13px;line-height:1.5;color:var(--lp-muted)}
+#landingPage .lpFrameworkLine strong{color:var(--lp-text)}
+
 </style>
 </head>
 <body>
 
 <div id="landingPage"><div class="lpWrap">
-<section class="lpHero"><div><div class="lpEyebrow">Telfer AI Living Guidance</div><h1>Design a Generative AI Policy That Fits Your Course</h1><p class="lpLede">Course AI policies should reflect what students are expected to learn, practice, and demonstrate. This tool helps instructors identify an appropriate course-policy archetype, set different levels of AI use for individual assessments, specify the functions AI may perform, and add responsible-use requirements appropriate to their teaching context.</p></div><aside class="lpHeroCard"><strong>One technology, different learning purposes</strong><p>The appropriate role of AI can vary substantially across courses. The examples below show how different learning priorities can reasonably lead to different policy approaches.</p></aside></section>
+<section class="lpHero"><div><div class="lpEyebrow">Course AI Policy Builder</div><h1>Design a Generative AI Policy That Fits Your Course</h1><p class="lpLede">Course AI policies should reflect what students are expected to learn, practice, and demonstrate. This tool helps instructors identify an appropriate course-policy archetype, set different levels of AI use for individual assessments, specify the functions AI may perform, and add responsible-use requirements appropriate to their teaching context.</p><p class="lpFrameworkLine"><strong>Course AI Policy Builder</strong> · An interactive tool based on the <strong>Course AI Policy Patterns (CAPP) Framework</strong>.</p></div><aside class="lpHeroCard"><strong>One technology, different learning purposes</strong><p>The appropriate role of AI can vary substantially across courses. The examples below show how different learning priorities can reasonably lead to different policy approaches.</p></aside></section>
 <section class="lpSection">
 <div class="lpSectionHead"><h2>Illustrative Examples: Four Courses, Four Different AI Policy Logics</h2><p>The archetype is driven by what students need to learn and demonstrate, not by a general preference for more or less AI use.</p></div>
 <div class="courseCards">
@@ -72,15 +76,17 @@
 
 <footer class="lpFooter">
   <div class="lpFooterMain">
-    <strong>AI Course Policy Selector</strong>
+    <strong>Course AI Policy Builder</strong>
+    <span>Based on the Course AI Policy Patterns (CAPP) Framework</span>
     <span>Developed by Umar Ruhi · Telfer School of Management, University of Ottawa</span>
     <span>Version 1 · August 2026 · © 2026 Umar Ruhi</span>
   </div>
   <details class="lpFooterDetails">
     <summary>About, Citation &amp; Disclaimer</summary>
     <div class="lpFooterDetailsBody">
-      <p><strong>Suggested citation:</strong> Ruhi, U. (2026). <em>AI Course Policy Selector</em> (Version 1) [Web application]. Telfer School of Management, University of Ottawa.</p>
-      <p><strong>Disclaimer:</strong> This tool provides advisory guidance to support instructor judgment in developing course-level generative AI policies. It reflects relevant institutional guidance available at the time of publication but does not constitute University policy. Because AI technologies, practices, and institutional guidance continue to evolve, instructors should review and adapt generated language for their course context and consult updated guidance where appropriate.</p>
+      <p><strong>Suggested citation — Framework:</strong> Ruhi, U. (2026). <em>Course AI Policy Patterns (CAPP): A layered framework for course-level generative AI policy design</em> (Version 1). Telfer School of Management, University of Ottawa.</p>
+      <p><strong>Suggested citation — Interactive Tool:</strong> Ruhi, U. (2026). <em>Course AI Policy Builder: An interactive tool based on the Course AI Policy Patterns (CAPP) Framework</em> (Version 1) [Web application]. Telfer School of Management, University of Ottawa.</p>
+      <p><strong>Disclaimer:</strong> The Course AI Policy Patterns (CAPP) Framework and Course AI Policy Builder provide advisory guidance to support instructor judgment in developing course-level generative AI policies. CAPP synthesizes relevant academic research and policy resources related to AI assessment, AI-use disclosure, research task delegation, and research integrity in scholarly publishing. The framework and tool do not constitute institution-specific policy. Generative AI technologies, educational practices, and related guidance continue to evolve. Instructors should therefore review and adapt any generated policy language to their course context, learning objectives, assessment design, and current applicable institutional requirements and guidance.</p>
     </div>
   </details>
 </footer>
@@ -139,7 +145,7 @@
     <div>
       <h1>Build a Course AI Policy from Pedagogy First</h1>
       <p class="lede">Answer six short questions to identify the course-policy archetypes that best fit your teaching context. Then configure assessment-level AI permissions, permitted AI functions, and the responsibility clauses your course requires.</p>
-      <p class="versionLine">Aligned with Telfer AI Living Guidance 01: Course-Level Generative AI Policies, Version 1 (August 2026).</p>
+      <p class="versionLine">Based on the Course AI Policy Patterns (CAPP) Framework · Version 1 · August 2026.</p>
     </div>
     <aside class="principle"><strong>Core design principle</strong>Start with what students need to learn and demonstrate. The appropriate role of generative AI follows from those learning and assessment requirements. Information, material, and systems risk primarily add guardrails rather than determining the course archetype by themselves.</aside>
   </section>
@@ -149,16 +155,17 @@
     <div id="configStatusTop" class="configStatus" aria-live="polite"></div>
   </div>
   <details>
-    <summary>Scope and Basis of the Selector</summary>
+    <summary>Scope and Basis of CAPP and the Builder</summary>
     <div class="guidanceBox">
       <p><strong>Generative AI</strong> is used broadly here to include AI systems or AI-enabled functions that generate, transform, summarize, analyze, or otherwise produce substantive content in response to user input. Because these capabilities are increasingly embedded in common software, the tool focuses on permitted uses and functions rather than product lists.</p>
-      <p>The framework synthesizes analysis of 217 course AI policies, academic and external guidance, and practical experience supporting faculty members in developing and refining course AI policies. Elements of the framework and several policy approaches have also been iteratively discussed, applied, and refined with teaching colleagues across foundational, theoretical, applied, quantitative, and qualitative business courses.</p>
+      <p>The <strong>Course AI Policy Patterns (CAPP) Framework</strong> is a layered framework for course-level generative AI policy design. It supports instructors in developing context-appropriate policy configurations by combining course-policy archetypes, assessment-level AI permissions, permitted AI functions, and responsible-use safeguards. CAPP synthesizes analysis of 217 course AI policies, relevant academic research and policy resources related to AI assessment, AI-use disclosure, research task delegation, and research integrity in scholarly publishing, and practical experience supporting faculty members in developing and refining course AI policies. Elements of the framework and several policy approaches have also been iteratively discussed, applied, and refined with teaching colleagues across foundational, theoretical, applied, quantitative, and qualitative courses, initially within business and management education contexts.</p>
+      <p>The <strong>Course AI Policy Builder</strong> is the interactive implementation of the CAPP Framework. It helps instructors translate the framework into a course-specific policy configuration and student-facing policy language.</p>
       <p><strong>The six archetypes are not a maturity ladder.</strong> They represent different pedagogical relationships between AI, learning, and assessment. A restrictive approach can be appropriate in an advanced course, and an AI-integrated approach can be appropriate in an introductory course when AI capability is itself a learning objective.</p>
     </div>
   </details>
 
   <section class="step">
-    <div class="stepHead"><div class="num">1</div><div><h2>Course Profile and Archetype Recommendation</h2><p>The selector recommends a primary archetype and one useful alternative. The recommendation is advisory, and the archetypes should not be interpreted as a progression from less to more sophisticated AI use.</p></div></div>
+    <div class="stepHead"><div class="num">1</div><div><h2>Course Profile and Archetype Recommendation</h2><p>The Builder recommends a primary archetype and one useful alternative. The recommendation is advisory, and the archetypes should not be interpreted as a progression from less to more sophisticated AI use.</p></div></div>
     <div class="body">
       <form id="profileForm">
         <fieldset><legend class="qLabel"><span class="qNum">Question 1</span><span>Course Level</span></legend><div class="choices two">
@@ -281,17 +288,21 @@
       </section>
 
       <section class="aboutTool" aria-labelledby="aboutToolHeading">
-        <h3 id="aboutToolHeading">About This Tool</h3>
+        <h3 id="aboutToolHeading">About the Framework and Tool</h3>
         <div class="aboutMeta">
-          <p><strong>Developed by Umar Ruhi</strong><br>Telfer School of Management, University of Ottawa<br>Version 1 · August 2026<br>© 2026 Umar Ruhi. All rights reserved.</p>
+          <p><strong>Course AI Policy Patterns (CAPP) Framework</strong><br><strong>Course AI Policy Builder</strong> · Interactive implementation of CAPP<br><br><strong>Developed by Umar Ruhi</strong><br>Telfer School of Management, University of Ottawa<br>Version 1 · August 2026<br>© 2026 Umar Ruhi. All rights reserved.</p>
         </div>
         <div class="aboutBlock">
-          <h4>Suggested Citation</h4>
-          <p>Ruhi, U. (2026). <em>AI Course Policy Selector</em> (Version 1) [Web application]. Telfer School of Management, University of Ottawa.</p>
+          <h4>Suggested Citation — Framework</h4>
+          <p>Ruhi, U. (2026). <em>Course AI Policy Patterns (CAPP): A layered framework for course-level generative AI policy design</em> (Version 1). Telfer School of Management, University of Ottawa.</p>
+        </div>
+        <div class="aboutBlock">
+          <h4>Suggested Citation — Interactive Tool</h4>
+          <p>Ruhi, U. (2026). <em>Course AI Policy Builder: An interactive tool based on the Course AI Policy Patterns (CAPP) Framework</em> (Version 1) [Web application]. Telfer School of Management, University of Ottawa.</p>
         </div>
         <div class="aboutBlock">
           <h4>Disclaimer</h4>
-          <p>This tool provides advisory guidance to support instructor judgment in developing course-level generative AI policies. It reflects relevant institutional guidance available at the time of publication but does not constitute University policy. Because AI technologies, practices, and institutional guidance continue to evolve, instructors should review and adapt generated language for their course context and consult updated guidance where appropriate.</p>
+          <p>The Course AI Policy Patterns (CAPP) Framework and Course AI Policy Builder provide advisory guidance to support instructor judgment in developing course-level generative AI policies. CAPP synthesizes relevant academic research and policy resources related to AI assessment, AI-use disclosure, research task delegation, and research integrity in scholarly publishing. The framework and tool do not constitute institution-specific policy. Generative AI technologies, educational practices, and related guidance continue to evolve. Instructors should therefore review and adapt any generated policy language to their course context, learning objectives, assessment design, and current applicable institutional requirements and guidance.</p>
         </div>
       </section>
     </div>
@@ -356,7 +367,7 @@ const clauses={
  defend:{name:'Explainability and ability to defend the work',desc:'Students should understand and be able to explain work submitted in their name.',text:'You should be able to explain the reasoning, methods, evidence, assumptions, and decisions represented in work you submit, including material developed with AI assistance. You may be asked to explain, defend, revise, or apply elements of your work to demonstrate your understanding and contribution.'},
  confidential:{name:'Confidential, sensitive, and peer information',desc:'Do not expose personal, proprietary, client, research, or other students’ information to unapproved AI systems.',text:'Do not upload or enter personal information, confidential organizational information, client data, proprietary material, research-participant data, another student’s work or personal information, peer feedback, or other sensitive material into an external generative AI system unless you have explicit authorization and are using an institutionally approved environment for that information. When possible, use fictional, synthetic, anonymized, or appropriately de-identified data instead.'},
  agentic:{name:'Connected and agentic AI systems',desc:'Restrict AI access to protected apps, files, accounts, systems, and external actions.',text:'Do not authorize an AI tool or agent to access institutional, organizational, client, course, or other protected systems, accounts, files, or services, or to take external actions on your behalf, unless that access and use have been explicitly permitted.'},
- copyright:{name:'Copyrighted, licensed, and instructor-provided materials',desc:'Protect cases, readings, datasets, assessments, and instructor-provided materials.',text:'Do not upload copyrighted course materials, instructor-created materials, cases, textbook chapters, journal articles, licensed database content, or other protected material to an external generative AI system unless the applicable licence permits the intended use, the material is in the public domain, you have permission, or the university has approved the tool and use. Access to a resource does not automatically include permission to upload it to a third-party service.'},
+ copyright:{name:'Copyrighted, licensed, and instructor-provided materials',desc:'Protect cases, readings, datasets, assessments, and instructor-provided materials.',text:'Do not upload copyrighted course materials, instructor-created materials, cases, textbook chapters, journal articles, licensed database content, or other protected material to an external generative AI system unless the applicable licence permits the intended use, the material is in the public domain, you have permission, or the institution has approved the tool and use. Access to a resource does not automatically include permission to upload it to a third-party service.'},
  bias:{name:'Bias, representational limits, and appropriateness',desc:'Require critical review of biased, incomplete, misleading, or contextually inappropriate AI output.',text:'Evaluate AI-generated output critically for bias, missing perspectives, unsupported assumptions, inappropriate generalizations, and contextual or professional appropriateness. When the work concerns people or groups, consider whether the data, framing, and recommendations could produce unfair or misleading conclusions.'},
  access:{name:'Access, equity, accessibility, and approved tools',desc:'Provide equitable access and preserve approved accessibility supports and accommodations.',text:'When an assignment requires generative AI, the course will identify an approved tool or an accessible alternative. You are not required to purchase an additional AI subscription or provide sensitive personal information to complete course work unless this has been explicitly approved and communicated. Approved accessibility supports and accommodations continue to apply.'},
  uncertainty:{name:'When the status of a tool or use is unclear',desc:'Provide a clear fallback when embedded or changing AI functionality creates uncertainty.',text:'If you are uncertain whether a particular AI tool, feature, or use is permitted, ask the instructor before using it for assessed work. Do not assume that a tool is permitted simply because it is built into software used in the course.'}
