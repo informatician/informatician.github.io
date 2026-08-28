@@ -27,14 +27,14 @@
 
 
 #landingPage .lpFrameworkLine{margin:-4px 0 0;font-size:13px;line-height:1.5;color:var(--lp-muted)}
-#landingPage .lpFrameworkLine strong{color:var(--lp-text)}
+#landingPage .lpFrameworkLine strong{color:var(--lp-text)}#landingPage .lpFrameworkLine a{color:var(--lp-accent);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--lp-accent) 40%,transparent)}#landingPage .lpFrameworkLine a:hover{border-bottom-color:var(--lp-accent)}
 
 </style>
 </head>
 <body>
 
 <div id="landingPage"><div class="lpWrap">
-<section class="lpHero"><div><div class="lpEyebrow">Course AI Policy Builder</div><h1>Design a Generative AI Policy That Fits Your Course</h1><p class="lpLede">Course AI policies should reflect what students are expected to learn, practice, and demonstrate. This tool helps instructors identify an appropriate course-policy archetype, set different levels of AI use for individual assessments, specify the functions AI may perform, and add responsible-use requirements appropriate to their teaching context.</p><p class="lpFrameworkLine"><strong>Course AI Policy Builder</strong> · An interactive tool based on the <strong>Course AI Policy Patterns (CAPP) Framework</strong>.</p></div><aside class="lpHeroCard"><strong>One technology, different learning purposes</strong><p>The appropriate role of AI can vary substantially across courses. The examples below show how different learning priorities can reasonably lead to different policy approaches.</p></aside></section>
+<section class="lpHero"><div><div class="lpEyebrow">Course AI Policy Builder</div><h1>Design a Generative AI Policy That Fits Your Course</h1><p class="lpLede">Course AI policies should reflect what students are expected to learn, practice, and demonstrate. This tool helps instructors identify an appropriate course-policy archetype, set different levels of AI use for individual assessments, specify the functions AI may perform, and add responsible-use requirements appropriate to their teaching context.</p><p class="lpFrameworkLine"><strong>Course AI Policy Builder</strong> · An interactive tool based on the <a href="#aboutCapp"><strong>Course AI Policy Patterns (CAPP) Framework</strong></a>.</p></div><aside class="lpHeroCard"><strong>One technology, different learning purposes</strong><p>The appropriate role of AI can vary substantially across courses. The examples below show how different learning priorities can reasonably lead to different policy approaches.</p></aside></section>
 <section class="lpSection">
 <div class="lpSectionHead"><h2>Illustrative Examples: Four Courses, Four Different AI Policy Logics</h2><p>The archetype is driven by what students need to learn and demonstrate, not by a general preference for more or less AI use.</p></div>
 <div class="courseCards">
@@ -67,7 +67,7 @@
 <div class="stat"><div class="statNum">6</div><div class="statLabel">Course-Policy Archetypes</div><p>Select a pedagogically appropriate default relationship between AI, learning, and assessment.</p><button type="button" class="statAction" data-feature="archetypes" aria-expanded="false">View the 6 Archetypes</button></div>
 <div class="stat"><div class="statNum">5</div><div class="statLabel">Assessment-Level AI Options</div><p>Set the overall AI permission pattern for each assessment.</p><button type="button" class="statAction" data-feature="levels" aria-expanded="false">View the 5 AI Levels</button></div>
 <div class="stat"><div class="statNum">11</div><div class="statLabel">Permitted AI Functions</div><p>Specify what AI may actually be used to do within an assessment.</p><button type="button" class="statAction" data-feature="functions" aria-expanded="false">View the 11 Functions</button></div>
-<div class="stat"><div class="statNum">12</div><div class="statLabel">Responsible-Use Safeguards</div><p>Add relevant expectations for disclosure, verification, privacy, copyright, accessibility, group work, and other responsibilities.</p><button type="button" class="statAction" data-feature="safeguards" aria-expanded="false">View the 12 Safeguards</button></div>
+<div class="stat"><div class="statNum">13</div><div class="statLabel">Responsible-Use Safeguards</div><p>Add cross-cutting expectations for disclosure, verification, privacy, copyright, accessibility, environmental and labour impacts, group work, and other responsibilities.</p><button type="button" class="statAction" data-feature="safeguards" aria-expanded="false">View the 13 Safeguards</button></div>
 </div>
 <div id="featureDetails" class="featureDetails" hidden aria-live="polite"><div class="featureDetailsHead"><div><h3 id="featureTitle"></h3><p id="featureIntro"></p></div><button type="button" class="featureClose" id="featureClose">Close</button></div><div id="featureSummary" class="summaryGrid"></div></div>
 </section>
@@ -81,9 +81,10 @@
     <span>Developed by Umar Ruhi · Telfer School of Management, University of Ottawa</span>
     <span>Version 1 · August 2026 · © 2026 Umar Ruhi</span>
   </div>
-  <details class="lpFooterDetails">
+  <details class="lpFooterDetails" id="aboutCapp">
     <summary>About, Citation &amp; Disclaimer</summary>
     <div class="lpFooterDetailsBody">
+      <p>The <strong>Course AI Policy Patterns (CAPP) Framework</strong> is a layered framework for course-level generative AI policy design. It supports instructors in developing context-appropriate policy configurations by combining course-policy archetypes, assessment-level AI permissions, permitted AI functions, and responsible-use safeguards. CAPP is based on analysis and synthesis of more than 200 course AI policies, relevant academic research and policy resources related to AI assessment, AI-use disclosure, research task delegation, and research integrity in scholarly publishing, and practical experience supporting faculty members in developing and refining course AI policies. Elements of the framework and several policy approaches have also been iteratively discussed, applied, and refined with teaching colleagues across foundational, theoretical, applied, quantitative, and qualitative courses, initially within business and management education contexts.</p>
       <p><strong>Suggested citation — Framework:</strong> Ruhi, U. (2026). <em>Course AI Policy Patterns (CAPP): A layered framework for course-level generative AI policy design</em> (Version 1). Telfer School of Management, University of Ottawa.</p>
       <p><strong>Suggested citation — Interactive Tool:</strong> Ruhi, U. (2026). <em>Course AI Policy Builder: An interactive tool based on the Course AI Policy Patterns (CAPP) Framework</em> (Version 1) [Web application]. Telfer School of Management, University of Ottawa.</p>
       <p><strong>Disclaimer:</strong> The Course AI Policy Patterns (CAPP) Framework and Course AI Policy Builder provide advisory guidance to support instructor judgment in developing course-level generative AI policies. CAPP synthesizes relevant academic research and policy resources related to AI assessment, AI-use disclosure, research task delegation, and research integrity in scholarly publishing. The framework and tool do not constitute institution-specific policy. Generative AI technologies, educational practices, and related guidance continue to evolve. Instructors should therefore review and adapt any generated policy language to their course context, learning objectives, assessment design, and current applicable institutional requirements and guidance.</p>
@@ -158,9 +159,8 @@
     <summary>Scope and Basis of CAPP and the Builder</summary>
     <div class="guidanceBox">
       <p><strong>Generative AI</strong> is used broadly here to include AI systems or AI-enabled functions that generate, transform, summarize, analyze, or otherwise produce substantive content in response to user input. Because these capabilities are increasingly embedded in common software, the tool focuses on permitted uses and functions rather than product lists.</p>
-      <p>The <strong>Course AI Policy Patterns (CAPP) Framework</strong> is a layered framework for course-level generative AI policy design. It supports instructors in developing context-appropriate policy configurations by combining course-policy archetypes, assessment-level AI permissions, permitted AI functions, and responsible-use safeguards. CAPP synthesizes analysis of 217 course AI policies, relevant academic research and policy resources related to AI assessment, AI-use disclosure, research task delegation, and research integrity in scholarly publishing, and practical experience supporting faculty members in developing and refining course AI policies. Elements of the framework and several policy approaches have also been iteratively discussed, applied, and refined with teaching colleagues across foundational, theoretical, applied, quantitative, and qualitative courses, initially within business and management education contexts.</p>
+      <p>The <strong>Course AI Policy Patterns (CAPP) Framework</strong> is a layered framework for course-level generative AI policy design. It supports instructors in developing context-appropriate policy configurations by combining course-policy archetypes, assessment-level AI permissions, permitted AI functions, and responsible-use safeguards. CAPP is based on analysis and synthesis of more than 200 course AI policies, relevant academic research and policy resources related to AI assessment, AI-use disclosure, research task delegation, and research integrity in scholarly publishing, and practical experience supporting faculty members in developing and refining course AI policies. Elements of the framework and several policy approaches have also been iteratively discussed, applied, and refined with teaching colleagues across foundational, theoretical, applied, quantitative, and qualitative courses, initially within business and management education contexts.</p>
       <p>The <strong>Course AI Policy Builder</strong> is the interactive implementation of the CAPP Framework. It helps instructors translate the framework into a course-specific policy configuration and student-facing policy language.</p>
-      <p><strong>The six archetypes are not a maturity ladder.</strong> They represent different pedagogical relationships between AI, learning, and assessment. A restrictive approach can be appropriate in an advanced course, and an AI-integrated approach can be appropriate in an introductory course when AI capability is itself a learning objective.</p>
     </div>
   </details>
 
@@ -227,7 +227,7 @@
   <section class="step" id="assessmentStep">
     <div class="stepHead"><div class="num">2</div><div><h2>Assessment-Level Overrides</h2><p>A course-level archetype establishes the default. For each major assessment, you can set an AI permission level, specify permitted AI functions, and identify any boundaries that should remain student-led.</p></div></div>
     <div class="body">
-      <div class="guidanceBox"><strong>Policy precedence:</strong> assessment-specific instructions take precedence over the course-level default for that assessment. When an assessment is silent, the course-level default applies. If the status of a tool, feature, or use is unclear, students should seek clarification before using it for assessed work.</div>
+      <div class="guidanceBox"><strong>Policy precedence:</strong> assessment-specific instructions take precedence over the course-level default for that assessment. For assessments without specific AI instructions, the course-level default applies. If the status of a tool, feature, or use is unclear, students should seek clarification before using it for assessed work.</div>
       <div id="assessmentDisabled" class="disabledNote">Complete Step 1 and choose an archetype first.</div>
       <div id="assessmentControls" hidden>
         <p class="sectionInstruction">Add each major assessment for which you want to specify an AI rule. Choose the overall AI level, then review the suggested AI functions that are pre-selected for that level. You can check or uncheck functions, indicate instructor-directed AI engagement, and add any student-led boundaries or other conditions.</p>
@@ -311,7 +311,7 @@
 <script>
 (()=>{
 const root=document.getElementById('ai-policy-selector');
-const TOOL_VERSION='2.1';const CONFIG_SCHEMA_VERSION=1;
+const TOOL_VERSION='2.3';const CONFIG_SCHEMA_VERSION=1;
 if(root.dataset.ready)return;root.dataset.ready='1';
 const archetypes={
  human:{name:'Human-First Foundations',short:'Protect independent development and demonstration of foundational capabilities.',core:'Generative AI is generally not used to perform the intellectual work that the course or assessment is designed to develop and evaluate.',sample:'Generative AI use in this course is generally not permitted for completing assessed work when the purpose of the assessment is to demonstrate independent mastery of core skills. Specific exceptions will be identified by the instructor.'},
@@ -338,7 +338,7 @@ const levelClause={
 };
 const aiFunctions={
  explain:{group:'Learning & Discovery',name:'Explanation, Tutoring & Practice',desc:'Explain concepts, answer questions, generate examples or practice, and support understanding.'},
- research:{group:'Learning & Discovery',name:'Research, Retrieval & Summarization',desc:'Locate potentially relevant information or sources, retrieve information, or summarize materials.'},
+ research:{group:'Learning & Discovery',name:'Research, Retrieval & Summarization',desc:'Locate potentially relevant information or sources, retrieve information, summarize materials, or support comprehension of assigned readings.'},
  ideation:{group:'Learning & Discovery',name:'Ideation, Brainstorming & Planning',desc:'Generate possibilities, organize ideas, develop outlines, or plan a workflow.'},
  method:{group:'Learning & Discovery',name:'Method, Approach & Solution Design',desc:'Help design a research method, analytical approach, model, workflow, or proposed solution.'},
  critique:{group:'Evaluation & Refinement',name:'Critique, Feedback & Alternative Perspectives',desc:'Evaluate student-developed work, identify weaknesses or assumptions, suggest reconsideration, or offer rival perspectives without independently producing the substantive replacement work unless another permitted function allows it.'},
@@ -370,6 +370,7 @@ const clauses={
  copyright:{name:'Copyrighted, licensed, and instructor-provided materials',desc:'Protect cases, readings, datasets, assessments, and instructor-provided materials.',text:'Do not upload copyrighted course materials, instructor-created materials, cases, textbook chapters, journal articles, licensed database content, or other protected material to an external generative AI system unless the applicable licence permits the intended use, the material is in the public domain, you have permission, or the institution has approved the tool and use. Access to a resource does not automatically include permission to upload it to a third-party service.'},
  bias:{name:'Bias, representational limits, and appropriateness',desc:'Require critical review of biased, incomplete, misleading, or contextually inappropriate AI output.',text:'Evaluate AI-generated output critically for bias, missing perspectives, unsupported assumptions, inappropriate generalizations, and contextual or professional appropriateness. When the work concerns people or groups, consider whether the data, framing, and recommendations could produce unfair or misleading conclusions.'},
  access:{name:'Access, equity, accessibility, and approved tools',desc:'Provide equitable access and preserve approved accessibility supports and accommodations.',text:'When an assignment requires generative AI, the course will identify an approved tool or an accessible alternative. You are not required to purchase an additional AI subscription or provide sensitive personal information to complete course work unless this has been explicitly approved and communicated. Approved accessibility supports and accommodations continue to apply.'},
+ impacts:{name:'Environmental, material, and labour impacts',desc:'Acknowledge the physical resources and human labour that support AI systems and consider whether AI use is proportionate to the task.',text:'AI systems depend on substantial physical infrastructure, material resources, and human labour. Students should recognize and reflect on the broader impacts associated with AI use, including energy and water consumption, computing hardware and mineral supply chains, electronic waste, and the often-invisible labour involved in data annotation, content moderation, and model evaluation. Responsible AI use includes considering whether AI use is proportionate to the task and whether a less resource-intensive approach could achieve the same learning or professional purpose.'},
  uncertainty:{name:'When the status of a tool or use is unclear',desc:'Provide a clear fallback when embedded or changing AI functionality creates uncertainty.',text:'If you are uncertain whether a particular AI tool, feature, or use is permitted, ask the instructor before using it for assessed work. Do not assume that a tool is permitted simply because it is built into software used in the course.'}
 };
 let selectedArch=null;let lastProfile=null;let assessments=[];
@@ -499,7 +500,7 @@ function renderAssessments(){
 root.querySelector('#addAssessment').addEventListener('click',()=>{if(assessments.length>=12)return;assessments.push(newAssessment('learning'));renderAssessments();updateBlueprint()});
 function escapeHtml(s){return String(s).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
 function suggestedClauses(){
- const set=new Set(['verify','uncertainty']);
+ const set=new Set(['verify','uncertainty','impacts']);
  if(['assistant','transparent','integrated','exploration','specific'].includes(selectedArch))set.add('disclosure');
  if(['transparent','integrated','exploration'].includes(selectedArch))set.add('defend');
  if(['integrated','exploration'].includes(selectedArch)){set.add('bias');set.add('access')}
@@ -713,7 +714,7 @@ const featureData={
     intro:'Functions describe what AI may actually be used to do in an assessment. They are grouped for ease of use, and instructors can adjust the suggested defaults for each assessment level.',
     items:[
       ['Explanation, Tutoring & Practice','Explain concepts, answer questions, generate examples or practice, and support understanding.'],
-      ['Research, Retrieval & Summarization','Locate potentially relevant information or sources, retrieve information, or summarize materials.'],
+      ['Research, Retrieval & Summarization','Locate potentially relevant information or sources, retrieve information, summarize materials, or support comprehension of assigned readings.'],
       ['Ideation, Brainstorming & Planning','Generate possibilities, organize ideas, develop outlines, or plan a workflow.'],
       ['Method, Approach & Solution Design','Help design a method, analytical approach, model, workflow, or proposed solution.'],
       ['Critique, Feedback & Alternative Perspectives','Evaluate student-developed work, identify weaknesses or assumptions, and provide rival perspectives or formative feedback.'],
@@ -726,8 +727,8 @@ const featureData={
     ]
   },
   safeguards:{
-    title:'Twelve Responsible-Use Safeguards',
-    intro:'These cross-cutting clauses can be added to any archetype when relevant to the course, assessments, or information environment.',
+    title:'Thirteen Responsible-Use Safeguards',
+    intro:'These cross-cutting safeguards can apply across course archetypes and assessment levels. The Builder suggests a starting set that instructors can review and adapt.',
     items:[
       ['AI Use Disclosure','Explain when and how AI contributed to producing assessed work.'],
       ['Citation','Attribute AI-generated material where required and consult underlying external sources directly before citing them.'],
@@ -740,6 +741,7 @@ const featureData={
       ['Copyrighted, Licensed, and Instructor-Provided Materials','Prevent inappropriate uploading of protected course or licensed materials to external AI systems.'],
       ['Bias, Representational Limits, and Appropriateness','Require critical review for bias, missing perspectives, unsupported assumptions, and inappropriate generalizations.'],
       ['Access, Equity, Accessibility, and Approved Tools','Ensure equitable access while preserving approved accommodations and accessibility supports.'],
+      ['Environmental, Material, and Labour Impacts','Recognize energy and water use, hardware and mineral supply chains, electronic waste, and often-invisible AI labour, and consider whether AI use is proportionate to the task.'],
       ['Uncertainty and Support','Tell students what to do when the status of an AI tool, feature, or use is unclear.']
     ]
   }
@@ -784,5 +786,20 @@ document.getElementById('backOverview').addEventListener('click',()=>{
 });
 })();
 </script>
+
+<script>
+document.addEventListener('DOMContentLoaded',()=>{
+  const cappLink=document.querySelector('.lpFrameworkLine a[href="#aboutCapp"]');
+  const cappDetails=document.getElementById('aboutCapp');
+  if(cappLink&&cappDetails){
+    cappLink.addEventListener('click',e=>{
+      e.preventDefault();
+      cappDetails.open=true;
+      cappDetails.scrollIntoView({behavior:'smooth',block:'center'});
+    });
+  }
+});
+</script>
+
 </body>
 </html>
