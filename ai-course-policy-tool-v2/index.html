@@ -67,11 +67,11 @@
 <div class="stat"><div class="statNum">6</div><div class="statLabel">Course-Policy Archetypes</div><p>Select a pedagogically appropriate default relationship between AI, learning, and assessment.</p><button type="button" class="statAction" data-feature="archetypes" aria-expanded="false">View the 6 Archetypes</button></div>
 <div class="stat"><div class="statNum">5</div><div class="statLabel">Assessment-Level AI Options</div><p>Set the overall AI permission pattern for each assessment.</p><button type="button" class="statAction" data-feature="levels" aria-expanded="false">View the 5 AI Levels</button></div>
 <div class="stat"><div class="statNum">11</div><div class="statLabel">Permitted AI Functions</div><p>Specify what AI may actually be used to do within an assessment.</p><button type="button" class="statAction" data-feature="functions" aria-expanded="false">View the 11 Functions</button></div>
-<div class="stat"><div class="statNum">13</div><div class="statLabel">Responsible-Use Clauses</div><p>Add cross-cutting clauses addressing disclosure, verification, privacy, copyright, accessibility, environmental and labour impacts, group work, and other responsibilities.</p><button type="button" class="statAction" data-feature="safeguards" aria-expanded="false">View the 13 Clauses</button></div>
+<div class="stat"><div class="statNum">13</div><div class="statLabel">Responsible-Use Clauses</div><p>Add cross-cutting clauses addressing disclosure, verification, privacy, copyright, accessibility, environmental and labour impacts, group work, and other responsibilities.</p><button type="button" class="statAction" data-feature="clauses" aria-expanded="false">View the 13 Clauses</button></div>
 </div>
 <div id="featureDetails" class="featureDetails" hidden aria-live="polite"><div class="featureDetailsHead"><div><h3 id="featureTitle"></h3><p id="featureIntro"></p></div><button type="button" class="featureClose" id="featureClose">Close</button></div><div id="featureSummary" class="summaryGrid"></div></div>
 </section>
-<section class="lpSection"><div class="lpSectionHead"><h2>What the Tool Does</h2><p>The tool guides you from course context to a practical, editable policy.</p></div><div class="whatGrid"><div class="whatPanel"><h3>A Short Decision Questionnaire</h3><div class="workflow"><div class="workflowItem"><div class="workflowNum">1</div><div><strong>Describe the course</strong><span>Answer six questions about level, objectives, foundational skills, assessments, professional relevance, and risk.</span></div></div><div class="workflowItem"><div class="workflowNum">2</div><div><strong>Choose an archetype</strong><span>Review one primary recommendation and one alternative.</span></div></div><div class="workflowItem"><div class="workflowNum">3</div><div><strong>Configure assessments and safeguards</strong><span>Choose an AI level, adjust permitted AI functions, define any student-led boundaries, and add cross-cutting responsibility clauses.</span></div></div></div></div><div class="whatPanel"><h3>Two Useful Outputs</h3><p><strong>Instructor Notes</strong> summarize the selected approach, assessment choices, and implementation reminders.</p><p><strong>Copy-Paste Ready Policy Text</strong> provides student-facing language that you can adapt for your syllabus or individual assignment instructions.</p></div></div></section>
+<section class="lpSection"><div class="lpSectionHead"><h2>What the Tool Does</h2><p>The tool guides you from course context to a practical, editable policy.</p></div><div class="whatGrid"><div class="whatPanel"><h3>A Short Decision Questionnaire</h3><div class="workflow"><div class="workflowItem"><div class="workflowNum">1</div><div><strong>Describe the course</strong><span>Answer six questions about level, objectives, foundational skills, assessments, professional relevance, and risk.</span></div></div><div class="workflowItem"><div class="workflowNum">2</div><div><strong>Choose an archetype</strong><span>Review one primary recommendation and one alternative.</span></div></div><div class="workflowItem"><div class="workflowNum">3</div><div><strong>Configure assessments and responsible-use clauses</strong><span>Choose an AI level, adjust permitted AI functions, define any student-led boundaries, and add cross-cutting responsibility clauses.</span></div></div></div></div><div class="whatPanel"><h3>Two Useful Outputs</h3><p><strong>Instructor Notes</strong> summarize the selected approach, assessment choices, and implementation reminders.</p><p><strong>Copy-Paste Ready Policy Text</strong> provides student-facing language that you can adapt for your syllabus or individual assignment instructions.</p></div></div></section>
 <section class="lpSection"><div class="lpInstructions"><h2>Before You Begin</h2><p>Allow a few minutes to answer the six course-profile questions, review the suggested archetypes, and then tailor assessment permissions and responsible-use clauses. The generated policy is a starting point, so please review and adapt the wording before using it in your syllabus or assignment instructions.</p></div><div class="ctaSimple"><button type="button" class="startTool">Build My Course AI Policy</button></div></section>
 
 <footer class="lpFooter">
@@ -278,7 +278,7 @@
       <section class="saveConfigPanel" aria-labelledby="saveConfigHeading">
         <div class="saveConfigCopy">
           <h3 id="saveConfigHeading">Save This Configuration</h3>
-          <p>Save your selections as a JSON file if you would like to revisit or revise this course policy later. The saved file can be loaded into the tool to repopulate your course profile, assessment settings, permitted AI functions, and safeguards.</p>
+          <p>Save your selections as a JSON file if you would like to revisit or revise this course policy later. The saved file can be loaded into the tool to repopulate your course profile, assessment settings, permitted AI functions, and responsible-use clauses.</p>
           <p class="saveTip"><strong>Tip:</strong> Use a recognizable filename that includes your course code or name and the date, for example <code>ADM4378-AI-policy-2026-08.json</code>.</p>
         </div>
         <div class="saveConfigAction">
@@ -311,7 +311,7 @@
 <script>
 (()=>{
 const root=document.getElementById('ai-policy-selector');
-const TOOL_VERSION='2.7';const CONFIG_SCHEMA_VERSION=1;
+const TOOL_VERSION='2.8';const CONFIG_SCHEMA_VERSION=1;
 if(root.dataset.ready)return;root.dataset.ready='1';
 const archetypes={
  human:{name:'Human-First Foundations',short:'Protect independent development and demonstration of foundational capabilities.',core:'Generative AI is generally not used to perform the intellectual work that the course or assessment is designed to develop and evaluate.',sample:'Generative AI use in this course is generally not permitted for completing assessed work when the purpose of the assessment is to demonstrate independent mastery of core skills. Specific exceptions will be identified by the instructor.'},
@@ -613,8 +613,8 @@ Assessment-specific AI instructions take precedence over the course-level defaul
 }
 
 
-function currentSafeguards(){return [...root.querySelectorAll('input[name="clause"]:checked')].map(x=>x.value)}
-function buildConfig(){return{schemaVersion:CONFIG_SCHEMA_VERSION,toolVersion:TOOL_VERSION,savedAt:new Date().toISOString(),courseProfile:collect(),selectedArchetype:selectedArch||null,assessments:assessments.map(a=>({name:a.name||'',level:a.level||'learning',directed:!!a.directed,directedDesc:a.directedDesc||'',functions:Array.isArray(a.functions)?a.functions:[],studentLed:a.studentLed||'',conditions:a.conditions||''})),safeguards:currentSafeguards()}}
+function currentClauses(){return [...root.querySelectorAll('input[name="clause"]:checked')].map(x=>x.value)}
+function buildConfig(){return{schemaVersion:CONFIG_SCHEMA_VERSION,toolVersion:TOOL_VERSION,savedAt:new Date().toISOString(),courseProfile:collect(),selectedArchetype:selectedArch||null,assessments:assessments.map(a=>({name:a.name||'',level:a.level||'learning',directed:!!a.directed,directedDesc:a.directedDesc||'',functions:Array.isArray(a.functions)?a.functions:[],studentLed:a.studentLed||'',conditions:a.conditions||''})),clauses: currentClauses()}}
 function setConfigStatus(msg,isError=false){root.querySelectorAll('#configStatusTop,#configStatusBottom').forEach(el=>{el.textContent=msg;el.style.color=isError?'var(--danger)':'var(--good)'})}
 function safeFilePart(s){return(s||'').trim().replace(/[^a-z0-9]+/gi,'-').replace(/^-+|-+$/g,'').slice(0,64)}
 function suggestedFilename(){const d=new Date(),ym=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;return `Course-AI-policy-${ym}.json`}
@@ -635,7 +635,7 @@ function loadConfigurationObject(data){
  selectedArch=savedArch;
  const archRadio=recGrid.querySelector(`input[name="archChoice"][value="${savedArch}"]`);if(archRadio)archRadio.checked=true;
  assessments=Array.isArray(data.assessments)&&data.assessments.length?data.assessments.map(a=>({name:a.name||'',level:levelText[a.level]?a.level:'learning',directed:!!a.directed,directedDesc:a.directedDesc||'',functions:Array.isArray(a.functions)?a.functions.filter(k=>aiFunctions[k]):[...(functionDefaults[a.level]||functionDefaults.learning)],studentLed:a.studentLed||'',conditions:a.conditions||''})):[newAssessment('learning')];
- renderAssessments();renderClauses();setClauseChecks(data.safeguards||[]);updateBlueprint();
+ renderAssessments();renderClauses();setClauseChecks((data.clauses || data.safeguards)||[]);updateBlueprint();
  const versionWarning=(data.schemaVersion!==CONFIG_SCHEMA_VERSION||data.toolVersion!==TOOL_VERSION)?` This file was created with tool version ${data.toolVersion||'unknown'}; please review all settings.`:'';
  setConfigStatus(`Configuration loaded successfully.${versionWarning}`,!!versionWarning);
 }
@@ -726,7 +726,7 @@ const featureData={
       ['Visualization, Media & Artifact Production','Create or substantially modify images, diagrams, figures, visualizations, multimedia, prototypes, or other artifacts.']
     ]
   },
-  safeguards:{
+  clauses:{
     title:'Thirteen Responsible-Use Clauses',
     intro:'These cross-cutting clauses can apply across course archetypes and assessment levels. The Builder suggests a starting set that instructors can review and adapt.',
     items:[
