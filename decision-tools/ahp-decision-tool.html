@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AHP decision tool</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:wght@500;600&display=swap');
+
+:root{
+  --paper:#E4EAEF;
+  --panel:#FFFFFF;
+  --ink:#12202B;
+  --soft:#4C5D6A;
+  --rule:#B4C0CB;
+  --rule-strong:#8C9BA8;
+  --field:#FFFFFF;
+  --signal:#0B5F55;
+  --signal-tint:#E6F0EE;
+  --alt:#33527A;
+  --flag:#8E3324;
+  --flag-tint:#FAEFEC;
+  --sans:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --serif:"IBM Plex Serif",Georgia,serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+  font-family:var(--sans);color:var(--ink);background-color:var(--paper);
+  background-image:linear-gradient(rgba(18,32,43,.04) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(18,32,43,.04) 1px,transparent 1px);
+  background-size:26px 26px;line-height:1.5;padding:2rem 1.1rem 5rem;
+  -webkit-text-size-adjust:100%;
+}
+.sheet{max-width:62rem;margin:0 auto}
+header{margin-bottom:1.8rem}
+h1{font-family:var(--serif);font-weight:600;font-size:2rem;line-height:1.15;margin:0 0 .5rem}
+.lede{max-width:46rem;color:var(--soft);margin:0}
+section{background:var(--panel);border:1px solid var(--rule);border-radius:3px;padding:1.4rem 1.3rem;margin-bottom:1.4rem;box-shadow:0 1px 2px rgba(18,32,43,.06)}
+.step{display:flex;align-items:center;gap:.7rem;margin-bottom:.2rem}
+.step .num{font-family:var(--mono);font-weight:600;font-size:.8rem;color:#fff;background:var(--signal);
+  width:1.45rem;height:1.45rem;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;flex:none}
+h2{font-family:var(--serif);font-size:1.2rem;font-weight:600;margin:0}
+.note{color:var(--soft);font-size:.92rem;max-width:47rem;margin:.4rem 0 1.1rem}
+label.fl{display:block;font-size:.8rem;font-weight:600;letter-spacing:.02em;text-transform:uppercase;color:var(--soft);margin-bottom:.3rem}
+
+input[type=text]{
+  font-family:var(--sans);font-size:.98rem;color:var(--ink);background:var(--field);
+  border:1px solid var(--rule-strong);border-radius:3px;padding:.55rem .6rem;width:100%;min-height:2.6rem;
+}
+input[type=text]:hover{border-color:var(--signal)}
+#decision{font-family:var(--serif);font-size:1.1rem;font-weight:500;min-height:3rem}
+input:focus-visible,textarea:focus-visible,select:focus-visible,button:focus-visible,summary:focus-visible{
+  outline:3px solid var(--signal);outline-offset:2px}
+select{
+  font-family:var(--mono);font-size:.95rem;color:var(--ink);background-color:var(--field);
+  border:1px solid var(--rule-strong);border-radius:3px;padding:.4rem 1.6rem .4rem .55rem;min-height:2.5rem;
+  appearance:none;-webkit-appearance:none;
+  background-image:linear-gradient(45deg,transparent 50%,var(--soft) 50%),linear-gradient(135deg,var(--soft) 50%,transparent 50%);
+  background-position:calc(100% - 15px) 55%,calc(100% - 10px) 55%;
+  background-size:5px 5px,5px 5px;background-repeat:no-repeat;cursor:pointer;
+}
+select:hover{border-color:var(--signal)}
+
+button{font-family:var(--sans);font-size:.92rem;cursor:pointer;border-radius:3px}
+.ghost{background:#F1F5F7;border:1px solid var(--rule-strong);color:var(--ink);padding:.5rem .9rem;min-height:2.5rem;font-weight:500}
+.ghost:hover{background:var(--signal-tint);border-color:var(--signal);color:var(--signal)}
+.primary{background:var(--signal);border:1px solid var(--signal);color:#fff;padding:.5rem .9rem;min-height:2.5rem;font-weight:500}
+.primary:hover{background:#0A4F47}
+.seg{display:inline-flex;border:1px solid var(--rule-strong);border-radius:3px;overflow:hidden}
+.seg button{border:0;background:#F1F5F7;color:var(--ink);padding:.55rem 1rem;min-height:2.6rem;font-weight:500;border-radius:0}
+.seg button + button{border-left:1px solid var(--rule-strong)}
+.seg button:hover{background:var(--signal-tint)}
+.seg button.on{background:var(--signal);color:#fff}
+.seg button.on:hover{background:#0A4F47}
+.toolbar{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1rem;align-items:center}
+.kill{border:1px solid transparent;background:transparent;color:var(--soft);font-size:1.15rem;line-height:1;
+  width:2.3rem;height:2.3rem;flex:none;display:inline-flex;align-items:center;justify-content:center}
+.kill:hover{color:var(--flag);background:var(--flag-tint);border-color:var(--flag)}
+
+.rowline{display:flex;align-items:center;gap:.6rem;margin-bottom:.5rem}
+.rowline .tag{font-family:var(--mono);font-size:.85rem;font-weight:600;color:var(--soft);
+  background:#EDF1F4;border:1px solid var(--rule);border-radius:3px;width:1.8rem;height:1.8rem;flex:none;
+  display:inline-flex;align-items:center;justify-content:center}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:1.8rem}
+
+.pair{border:1px solid var(--rule);border-radius:3px;padding:.75rem .85rem;margin-bottom:.6rem;background:#FBFCFD}
+.pair.set{background:var(--signal-tint);border-color:#A8CAC4}
+.pairheads{display:flex;justify-content:space-between;gap:1rem;font-size:.95rem;font-weight:600}
+.pairheads span:last-child{text-align:right}
+.slot{position:relative;padding:.15rem 0 0}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;background:transparent;margin:.5rem 0 .2rem;height:2rem;cursor:pointer}
+input[type=range]::-webkit-slider-runnable-track{height:.5rem;background:#D3DCE3;border:1px solid var(--rule-strong);border-radius:3px}
+input[type=range]::-moz-range-track{height:.5rem;background:#D3DCE3;border:1px solid var(--rule-strong);border-radius:3px}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:1.6rem;height:1.6rem;border-radius:50%;
+  background:var(--signal);border:2px solid #fff;box-shadow:0 0 0 1px var(--signal);margin-top:-.62rem}
+input[type=range]::-moz-range-thumb{width:1.6rem;height:1.6rem;border-radius:50%;background:var(--signal);
+  border:2px solid #fff;box-shadow:0 0 0 1px var(--signal)}
+.ticks{display:flex;justify-content:space-between;font-size:.72rem;color:var(--soft);font-family:var(--mono)}
+.verdict{font-size:.88rem;font-family:var(--mono);color:var(--soft);margin-top:.35rem}
+.pair.set .verdict{color:var(--signal);font-weight:500}
+
+.wrow{display:grid;grid-template-columns:minmax(7rem,13rem) 1fr 3.8rem;align-items:center;gap:.7rem;margin-bottom:.45rem}
+.wrow .name{font-size:.94rem;overflow-wrap:anywhere}
+.bar{height:.85rem;background:#DDE4EA;border:1px solid var(--rule);border-radius:2px}
+.bar i{display:block;height:100%;background:var(--signal)}
+.wrow .pct{font-family:var(--mono);font-size:.9rem;text-align:right;font-weight:500}
+.cr{margin-top:.9rem;padding:.7rem .85rem;border-left:4px solid var(--signal);background:var(--signal-tint);font-size:.9rem;border-radius:0 3px 3px 0}
+.cr.bad{border-left-color:var(--flag);background:var(--flag-tint)}
+.cr b{font-family:var(--mono)}
+.cr.small{margin-top:.7rem;font-size:.86rem;padding:.5rem .7rem}
+
+details{border:1px solid var(--rule);border-radius:3px;margin-bottom:.7rem;background:#fff}
+details[open]{border-left:4px solid var(--signal)}
+summary{padding:.75rem .9rem;cursor:pointer;font-weight:600;font-size:.97rem;list-style:none;
+  display:flex;justify-content:space-between;align-items:center;gap:1rem;background:#F1F5F7;min-height:3rem}
+summary::-webkit-details-marker{display:none}
+summary:hover{background:var(--signal-tint)}
+details[open] summary{background:var(--signal-tint);border-bottom:1px solid var(--rule)}
+summary .w{font-family:var(--mono);font-size:.85rem;color:var(--signal);font-weight:600;white-space:nowrap}
+summary .chev{display:inline-block;transition:transform .15s;color:var(--soft)}
+details[open] summary .chev{transform:rotate(90deg)}
+.dbody{padding:.8rem .9rem 1rem}
+
+table{width:100%;border-collapse:collapse;font-size:.94rem}
+th,td{text-align:left;padding:.55rem .45rem;border-bottom:1px solid var(--rule);vertical-align:middle}
+thead th{background:#F1F5F7;border-bottom:2px solid var(--rule-strong);font-weight:600;font-size:.88rem}
+tbody tr:hover{background:#F7FAFB}
+td.n,th.n{text-align:right;font-family:var(--mono)}
+
+.result{padding:1rem;border:1px solid var(--rule);border-radius:3px;background:#F7FAFB}
+.result .head{font-family:var(--serif);font-size:1.15rem;font-weight:600;margin-bottom:.6rem}
+.result p{margin:.5rem 0;font-size:.93rem}
+.rank{display:grid;grid-template-columns:minmax(7rem,14rem) 1fr 4.6rem;align-items:center;gap:.7rem;margin-bottom:.45rem;font-size:.94rem}
+.rank .bar i{background:var(--alt)}
+.rank.lead .bar i{background:var(--signal)}
+.rank.lead span:first-child{font-weight:600}
+.rank .pct{font-family:var(--mono);text-align:right}
+.drow{display:grid;grid-template-columns:minmax(7rem,13rem) 1fr;align-items:center;gap:.7rem;margin-bottom:.4rem;font-size:.91rem}
+.dbar{position:relative;height:.85rem;background:#DDE4EA;border:1px solid var(--rule);border-radius:2px}
+.dbar .mid{position:absolute;left:50%;top:-1px;bottom:-1px;width:1px;background:var(--rule-strong)}
+.dbar i{position:absolute;top:0;height:100%}
+.legend{font-size:.87rem;color:var(--soft);margin-top:.6rem}
+.swatch{display:inline-block;width:.75rem;height:.75rem;margin-right:.3rem;border:1px solid rgba(0,0,0,.15)}
+.hint{font-size:.87rem;color:var(--soft);margin-top:.6rem}
+.count{font-family:var(--mono);font-size:.85rem;color:var(--soft);margin:0}
+.sub{font-family:var(--serif);font-size:1rem;font-weight:600;margin:1.4rem 0 .5rem}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media print{
+  body{background:#fff;padding:0}
+  section{border:0;border-top:1px solid #999;box-shadow:none;page-break-inside:avoid}
+  .toolbar,.ghost,.primary,.kill,.seg{display:none}
+  input[type=range],.ticks{display:none}
+  details .dbody{display:none}
+}
+@media (max-width:660px){
+  .cols,.wrow,.drow,.rank{grid-template-columns:1fr}
+  .wrow .pct,.rank .pct{text-align:left}
+  body{padding:1.2rem .8rem 4rem}
+}
+</style>
+</head>
+<body>
+<div class="sheet">
+
+<header>
+  <h1>AHP decision tool</h1>
+  <p class="lede">Pairwise comparison of criteria to derive weights, with a consistency check, then options scored either directly or pairwise. Works for any decision with a few criteria and a few alternatives.</p>
+</header>
+
+<section>
+  <div class="step"><span class="num">1</span><h2>The decision</h2></div>
+  <p class="note">State it as a question with a real answer. "Which vendor for the LMS renewal" beats "the LMS thing".</p>
+  <label class="fl" for="decision">Decision</label>
+  <input type="text" id="decision" placeholder="Which option should we choose, and why?">
+</section>
+
+<section>
+  <div class="cols">
+    <div>
+      <div class="step"><span class="num">2</span><h2>Criteria</h2></div>
+      <p class="note">Three to six works best. Comparisons grow quickly, so six criteria means fifteen judgements.</p>
+      <div id="critList"></div>
+      <button class="ghost" id="addCrit">+ Add criterion</button>
+    </div>
+    <div>
+      <div class="step"><span class="num">3</span><h2>Options</h2></div>
+      <p class="note">The alternatives being decided between. Two to six.</p>
+      <div id="optList"></div>
+      <button class="ghost" id="addOpt">+ Add option</button>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="step"><span class="num">4</span><h2>Weight the criteria</h2></div>
+  <p class="note">For each pair, drag toward the one that matters more, and by how much. Centre means equal. Answer quickly, since deliberation tends to smuggle in the conclusion you already prefer.</p>
+  <p class="count" id="critCount"></p>
+  <div id="critPairs" style="margin-top:.6rem"></div>
+  <div class="sub">Derived weights</div>
+  <div id="critWeights"></div>
+  <div id="critCR"></div>
+</section>
+
+<section>
+  <div class="step"><span class="num">5</span><h2>Score the options</h2></div>
+  <p class="note">Direct rating is faster and easier to explain in a room. Pairwise is the full method, and it earns its extra time when options are hard to score on an absolute scale, for instance candidates or designs.</p>
+  <div class="toolbar" style="margin-top:0;margin-bottom:1.1rem">
+    <div class="seg" role="group" aria-label="Scoring mode">
+      <button id="modeRate" class="on">Rate directly</button>
+      <button id="modePair">Compare pairwise</button>
+    </div>
+    <span class="count" id="modeNote"></span>
+  </div>
+  <div id="scoreArea"></div>
+</section>
+
+<section>
+  <div class="step"><span class="num">6</span><h2>Result</h2></div>
+  <div id="result"></div>
+</section>
+
+<div class="toolbar">
+  <button class="primary" id="save">Save to file</button>
+  <button class="ghost" id="loadBtn">Load from file</button>
+  <input type="file" id="loadFile" accept="application/json" style="display:none">
+  <button class="ghost" onclick="window.print()">Print or save as PDF</button>
+  <button class="ghost" id="reset">Reset</button>
+</div>
+<p class="hint">Nothing is stored in the browser. Use "Save to file" to keep a decision, and "Load from file" to reopen it later.</p>
+
+</div>
+<script>
+const RI=[0,0,0,.58,.90,1.12,1.24,1.32,1.41,1.45,1.49];
+const WORDS={1:"equally important",2:"slightly more",3:"moderately more",4:"moderately to strongly more",5:"strongly more",6:"strongly to very strongly more",7:"very strongly more",8:"very to extremely strongly more",9:"extremely more"};
+const PREF={1:"equally good",2:"slightly better",3:"moderately better",4:"moderately to strongly better",5:"strongly better",6:"strongly to very strongly better",7:"very strongly better",8:"very to extremely strongly better",9:"extremely better"};
+
+let uid=0;
+const mk=n=>({id:"x"+(++uid),name:n});
+let state={
+  decision:"",
+  criteria:["Cost","Quality","Risk","Fit with what we already run"].map(mk),
+  options:["Option A","Option B","Option C"].map(mk),
+  cw:{},op:{},rate:{},mode:"rate"
+};
+let sayFns=[];
+
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const get=(store,a,b)=> (a+"|"+b) in store ? store[a+"|"+b] : ((b+"|"+a) in store ? -store[b+"|"+a] : 0);
+const setv=(store,a,b,v)=>{delete store[b+"|"+a];store[a+"|"+b]=v};
+
+function priorities(items,read){
+  const n=items.length;
+  if(n===0)return{w:[],cr:0};
+  if(n===1)return{w:[1],cr:0};
+  const A=Array.from({length:n},()=>Array(n).fill(1));
+  for(let i=0;i<n;i++)for(let j=i+1;j<n;j++){
+    const v=read(items[i].id,items[j].id),inten=Math.abs(v)+1;
+    const aij=v===0?1:(v<0?inten:1/inten);
+    A[i][j]=aij;A[j][i]=1/aij;
+  }
+  const gm=A.map(r=>Math.pow(r.reduce((p,x)=>p*x,1),1/n));
+  const s=gm.reduce((a,b)=>a+b,0);
+  const w=gm.map(x=>x/s);
+  let lam=0;
+  for(let i=0;i<n;i++){let row=0;for(let j=0;j<n;j++)row+=A[i][j]*w[j];lam+=row/w[i]}
+  lam/=n;
+  const cr=n>2?((lam-n)/(n-1))/RI[Math.min(n,10)]:0;
+  return {w,cr};
+}
+
+/* lists rebuild only on add or remove, never while typing */
+function listEditor(boxId,arr,letter,min,kind){
+  const box=document.getElementById(boxId);
+  box.innerHTML="";
+  arr.forEach((it,i)=>{
+    const row=document.createElement("div");row.className="rowline";
+    const tag=document.createElement("span");tag.className="tag";
+    tag.textContent=letter?String.fromCharCode(65+i):(i+1);
+    row.appendChild(tag);
+    const inp=document.createElement("input");
+    inp.type="text";inp.value=it.name;
+    inp.setAttribute("aria-label",kind+" "+(i+1)+" name");
+    inp.addEventListener("input",e=>{it.name=e.target.value;refreshLabels();compute()});
+    row.appendChild(inp);
+    if(arr.length>min){
+      const b=document.createElement("button");
+      b.className="kill";b.innerHTML="&times;";
+      b.title="Remove";b.setAttribute("aria-label","Remove "+kind+" "+(i+1));
+      b.addEventListener("click",()=>{arr.splice(i,1);renderAll()});
+      row.appendChild(b);
+    }
+    box.appendChild(row);
+  });
+}
+
+function refreshLabels(){
+  const byId={};
+  state.criteria.concat(state.options).forEach(it=>byId[it.id]=it.name);
+  document.querySelectorAll("[data-nm]").forEach(el=>{
+    const n=byId[el.getAttribute("data-nm")];
+    if(n!==undefined)el.textContent=n;
+  });
+  sayFns.forEach(f=>f());
+}
+
+function pairBlock(container,items,read,write,words){
+  container.innerHTML="";
+  for(let i=0;i<items.length;i++)for(let j=i+1;j<items.length;j++){
+    const a=items[i],b=items[j];
+    const d=document.createElement("div");d.className="pair";
+    const h=document.createElement("div");h.className="pairheads";
+    h.innerHTML="<span data-nm='"+a.id+"'>"+esc(a.name)+"</span><span data-nm='"+b.id+"'>"+esc(b.name)+"</span>";
+    const slot=document.createElement("div");slot.className="slot";
+    const sl=document.createElement("input");
+    sl.type="range";sl.min=-8;sl.max=8;sl.step=1;sl.value=read(a.id,b.id);
+    sl.setAttribute("aria-label","Compare "+a.name+" with "+b.name);
+    const ticks=document.createElement("div");ticks.className="ticks";
+    ticks.innerHTML="<span>extreme</span><span>strong</span><span>equal</span><span>strong</span><span>extreme</span>";
+    const v=document.createElement("div");v.className="verdict";
+    const say=()=>{
+      const n=Number(sl.value),inten=Math.abs(n)+1;
+      d.classList.toggle("set",n!==0);
+      v.textContent = n===0 ? (words===WORDS?"Equally important":"Equally good")
+        : (n<0?a.name:b.name)+" is "+words[inten]+" ("+inten+")";
+    };
+    sl.addEventListener("input",()=>{write(a.id,b.id,Number(sl.value));say();compute()});
+    sayFns.push(say);
+    say();
+    slot.appendChild(sl);slot.appendChild(ticks);
+    d.appendChild(h);d.appendChild(slot);d.appendChild(v);
+    container.appendChild(d);
+  }
+}
+
+function crBox(cr,n,small){
+  if(n<3)return "";
+  const cls="cr"+(cr>0.10?" bad":"")+(small?" small":"");
+  const msg=cr<=0.10
+    ? "Consistency ratio <b>"+cr.toFixed(3)+"</b>, within the 0.10 threshold. The judgements hold together."
+    : "Consistency ratio <b>"+cr.toFixed(3)+"</b>, above the 0.10 threshold. Somewhere in the comparisons one item beats a second, the second beats a third, and the third beats the first. Find the loop and talk it through before trusting these numbers.";
+  return "<div class='"+cls+"'>"+msg+"</div>";
+}
+
+function renderScores(){
+  const box=document.getElementById("scoreArea");
+  box.innerHTML="";
+  document.getElementById("modeRate").classList.toggle("on",state.mode==="rate");
+  document.getElementById("modePair").classList.toggle("on",state.mode==="pair");
+  const nPairs=state.criteria.length*state.options.length*(state.options.length-1)/2;
+  document.getElementById("modeNote").textContent = state.mode==="pair"
+    ? nPairs+" comparisons at this size"
+    : state.criteria.length*state.options.length+" ratings at this size";
+
+  if(state.mode==="rate"){
+    const t=document.createElement("table");
+    const thead=document.createElement("thead");
+    const hr=document.createElement("tr");
+    hr.innerHTML="<th>Criterion</th><th class='n'>Weight</th>"+
+      state.options.map(o=>"<th class='n'><span data-nm='"+o.id+"'>"+esc(o.name)+"</span></th>").join("");
+    thead.appendChild(hr);t.appendChild(thead);
+    const tb=document.createElement("tbody");
+    const {w}=priorities(state.criteria,(a,b)=>get(state.cw,a,b));
+    state.criteria.forEach((c,i)=>{
+      const tr=document.createElement("tr");
+      const td=document.createElement("td");
+      td.innerHTML="<span data-nm='"+c.id+"'>"+esc(c.name)+"</span>";
+      tr.appendChild(td);
+      const wt=document.createElement("td");wt.className="n";wt.id="wcell-"+c.id;
+      wt.textContent=(w[i]*100).toFixed(1)+"%";tr.appendChild(wt);
+      state.options.forEach(o=>{
+        const cell=document.createElement("td");cell.className="n";
+        const k=c.id+"::"+o.id;
+        if(!(k in state.rate))state.rate[k]=5;
+        const sel=document.createElement("select");
+        sel.setAttribute("aria-label",o.name+" on "+c.name);
+        for(let v=1;v<=9;v++){
+          const op=document.createElement("option");op.value=v;op.textContent=v;
+          if(state.rate[k]===v)op.selected=true;sel.appendChild(op);
+        }
+        sel.addEventListener("change",e=>{state.rate[k]=Number(e.target.value);compute()});
+        cell.appendChild(sel);tr.appendChild(cell);
+      });
+      tb.appendChild(tr);
+    });
+    t.appendChild(tb);box.appendChild(t);
+    const p=document.createElement("p");p.className="hint";
+    p.textContent="1 is poor, 9 is excellent, judged on each criterion separately. Score what is known rather than what is promised.";
+    box.appendChild(p);
+  }else{
+    const {w}=priorities(state.criteria,(a,b)=>get(state.cw,a,b));
+    state.criteria.forEach((c,i)=>{
+      const d=document.createElement("details");
+      if(i===0)d.open=true;
+      const loc=priorities(state.options,(x,y)=>get(state.op,c.id+"::"+x,y));
+      const sm=document.createElement("summary");
+      sm.innerHTML="<span><span class='chev'>&#9656;</span> <span data-nm='"+c.id+"'>"+esc(c.name)+"</span></span>"+
+                   "<span class='w' id='sumw-"+c.id+"'>weight "+(w[i]*100).toFixed(1)+"%</span>";
+      d.appendChild(sm);
+      const body=document.createElement("div");body.className="dbody";
+      const ph=document.createElement("div");
+      pairBlock(ph,state.options,
+        (x,y)=>get(state.op,c.id+"::"+x,y),
+        (x,y,v)=>setv(state.op,c.id+"::"+x,y,v),
+        PREF);
+      body.appendChild(ph);
+      const crd=document.createElement("div");
+      crd.id="loccr-"+c.id;
+      crd.innerHTML=crBox(loc.cr,state.options.length,true);
+      body.appendChild(crd);
+      d.appendChild(body);box.appendChild(d);
+    });
+  }
+}
+
+function compute(){
+  const {w,cr}=priorities(state.criteria,(a,b)=>get(state.cw,a,b));
+  const n=state.criteria.length;
+  const pairsN=n*(n-1)/2;
+  document.getElementById("critCount").textContent=
+    pairsN+" comparison"+(pairsN===1?"":"s")+" for "+n+" criteria";
+
+  const wb=document.getElementById("critWeights");wb.innerHTML="";
+  const mx=Math.max(...w,0.0001);
+  state.criteria.forEach((c,i)=>{
+    const r=document.createElement("div");r.className="wrow";
+    r.innerHTML="<span class='name' data-nm='"+c.id+"'>"+esc(c.name)+"</span>"+
+      "<span class='bar'><i style='width:"+(w[i]/mx*100)+"%'></i></span>"+
+      "<span class='pct'>"+(w[i]*100).toFixed(1)+"%</span>";
+    wb.appendChild(r);
+  });
+  document.getElementById("critCR").innerHTML=crBox(cr,n,false);
+
+  let totals;
+  if(state.mode==="rate"){
+    totals=state.options.map(o=>state.criteria.reduce((s,c,i)=>s+w[i]*(state.rate[c.id+"::"+o.id]||5),0));
+    state.criteria.forEach((c,i)=>{
+      const el=document.getElementById("wcell-"+c.id);
+      if(el)el.textContent=(w[i]*100).toFixed(1)+"%";
+    });
+  }else{
+    totals=state.options.map(()=>0);
+    state.criteria.forEach((c,i)=>{
+      const loc=priorities(state.options,(x,y)=>get(state.op,c.id+"::"+x,y));
+      loc.w.forEach((p,oi)=>totals[oi]+=w[i]*p);
+      const sw=document.getElementById("sumw-"+c.id);
+      if(sw)sw.textContent="weight "+(w[i]*100).toFixed(1)+"%";
+      const lc=document.getElementById("loccr-"+c.id);
+      if(lc)lc.innerHTML=crBox(loc.cr,state.options.length,true);
+    });
+  }
+
+  const idx=totals.map((t,i)=>i).sort((a,b)=>totals[b]-totals[a]);
+  const top=idx[0],second=idx[1];
+  const margin=second!==undefined?totals[top]-totals[second]:0;
+  const rel=second!==undefined&&totals[second]>0?margin/totals[second]:1;
+
+  let html="<div class='head'>"+esc(state.options[top].name)+" ranks first</div>";
+  const mxT=Math.max(...totals,0.0001);
+  idx.forEach((i,pos)=>{
+    const val=state.mode==="rate"?totals[i].toFixed(2):(totals[i]*100).toFixed(1)+"%";
+    html+="<div class='rank"+(pos===0?" lead":"")+"'><span>"+esc(state.options[i].name)+"</span>"+
+      "<span class='bar'><i style='width:"+(totals[i]/mxT*100)+"%'></i></span>"+
+      "<span class='pct'>"+val+"</span></div>";
+  });
+  if(second!==undefined){
+    html+="<p>Lead over "+esc(state.options[second].name)+": "+
+      (state.mode==="rate"?margin.toFixed(2)+" points out of 9":(margin*100).toFixed(1)+" percentage points")+". "+
+      (rel<0.05?"That is inside the noise of this method. Treat the two as tied and decide on grounds the model does not capture."
+       :rel<0.15?"A real but modest lead, sensitive to how the weights came out."
+       :"A clear lead. If it still feels wrong, look for a criterion missing from the list.")+"</p>";
+
+    const a=top,b=second;
+    const per=state.criteria.map((c,i)=>{
+      if(state.mode==="rate")
+        return w[i]*((state.rate[c.id+"::"+state.options[a].id]||5)-(state.rate[c.id+"::"+state.options[b].id]||5));
+      const loc=priorities(state.options,(x,y)=>get(state.op,c.id+"::"+x,y));
+      return w[i]*(loc.w[a]-loc.w[b]);
+    });
+    const m2=Math.max(0.0001,...per.map(Math.abs));
+    html+="<div style='margin-top:1.1rem'>";
+    state.criteria.forEach((c,i)=>{
+      const d=per[i],len=Math.abs(d)/m2*50;
+      const st=d>=0?"right:50%;width:"+len+"%;background:var(--signal)":"left:50%;width:"+len+"%;background:var(--alt)";
+      html+="<div class='drow'><span>"+esc(c.name)+"</span><span class='dbar'><span class='mid'></span><i style='"+st+"'></i></span></div>";
+    });
+    html+="</div><div class='legend'><span class='swatch' style='background:var(--signal)'></span>favours "+esc(state.options[a].name)+
+      " &nbsp; <span class='swatch' style='background:var(--alt)'></span>favours "+esc(state.options[b].name)+
+      ". Bar length is criterion weight times the gap between the two, so it shows what is driving the ranking.</div>";
+  }
+  document.getElementById("result").innerHTML=html;
+}
+
+function renderAll(){
+  sayFns=[];
+  listEditor("critList",state.criteria,true,2,"criterion");
+  listEditor("optList",state.options,false,2,"option");
+  pairBlock(document.getElementById("critPairs"),state.criteria,
+    (a,b)=>get(state.cw,a,b),(a,b,v)=>setv(state.cw,a,b,v),WORDS);
+  renderScores();
+  compute();
+}
+document.getElementById("addCrit").addEventListener("click",()=>{
+  if(state.criteria.length>=9)return;state.criteria.push(mk("New criterion"));renderAll();
+});
+document.getElementById("addOpt").addEventListener("click",()=>{
+  if(state.options.length>=8)return;state.options.push(mk("New option"));renderAll();
+});
+document.getElementById("decision").addEventListener("input",e=>{state.decision=e.target.value});
+document.getElementById("modeRate").addEventListener("click",()=>{state.mode="rate";sayFns=[];renderScores();compute()});
+document.getElementById("modePair").addEventListener("click",()=>{state.mode="pair";sayFns=[];renderScores();compute()});
+
+document.getElementById("save").addEventListener("click",()=>{
+  const blob=new Blob([JSON.stringify(state,null,2)],{type:"application/json"});
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(blob);
+  a.download=((state.decision||"ahp-decision").replace(/[^a-z0-9]+/gi,"-").toLowerCase().replace(/^-+|-+$/g,"").slice(0,50)||"ahp-decision")+".json";
+  a.click();URL.revokeObjectURL(a.href);
+});
+document.getElementById("loadBtn").addEventListener("click",()=>document.getElementById("loadFile").click());
+document.getElementById("loadFile").addEventListener("change",e=>{
+  const f=e.target.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=()=>{
+    try{
+      const s=JSON.parse(r.result);
+      if(!Array.isArray(s.criteria)||!Array.isArray(s.options))throw new Error("bad");
+      state=s;state.mode=state.mode||"rate";
+      state.cw=state.cw||{};state.op=state.op||{};state.rate=state.rate||{};
+      state.criteria.concat(state.options).forEach(it=>{
+        const num=parseInt(String(it.id).replace(/\D/g,""),10);
+        if(!isNaN(num)&&num>uid)uid=num;
+      });
+      document.getElementById("decision").value=state.decision||"";
+      renderAll();
+    }catch(err){alert("That file could not be read as a saved decision.")}
+  };
+  r.readAsText(f);e.target.value="";
+});
+document.getElementById("reset").addEventListener("click",()=>{
+  if(!confirm("Clear everything and start a new decision?"))return;
+  state={decision:"",criteria:["Criterion 1","Criterion 2","Criterion 3"].map(mk),
+         options:["Option A","Option B"].map(mk),cw:{},op:{},rate:{},mode:"rate"};
+  document.getElementById("decision").value="";
+  renderAll();
+});
+
+renderAll();
+</script>
+</body>
+</html>

@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Weighted scoring matrix</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:wght@500;600&display=swap');
+
+:root{
+  --paper:#E4EAEF;--panel:#FFFFFF;--ink:#12202B;--soft:#4C5D6A;
+  --rule:#B4C0CB;--rule-strong:#8C9BA8;--field:#FFFFFF;
+  --signal:#0B5F55;--signal-tint:#E6F0EE;--alt:#33527A;
+  --flag:#8E3324;--flag-tint:#FAEFEC;
+  --sans:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --serif:"IBM Plex Serif",Georgia,serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+  font-family:var(--sans);color:var(--ink);background-color:var(--paper);
+  background-image:linear-gradient(rgba(18,32,43,.04) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(18,32,43,.04) 1px,transparent 1px);
+  background-size:26px 26px;line-height:1.5;padding:2rem 1.1rem 5rem;-webkit-text-size-adjust:100%;
+}
+.sheet{max-width:64rem;margin:0 auto}
+header{margin-bottom:1.8rem}
+h1{font-family:var(--serif);font-weight:600;font-size:2rem;line-height:1.15;margin:0 0 .5rem}
+.lede{max-width:47rem;color:var(--soft);margin:0}
+section{background:var(--panel);border:1px solid var(--rule);border-radius:3px;padding:1.4rem 1.3rem;margin-bottom:1.4rem;box-shadow:0 1px 2px rgba(18,32,43,.06)}
+.step{display:flex;align-items:center;gap:.7rem;margin-bottom:.2rem}
+.step .num{font-family:var(--mono);font-weight:600;font-size:.8rem;color:#fff;background:var(--signal);
+  width:1.45rem;height:1.45rem;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;flex:none}
+h2{font-family:var(--serif);font-size:1.2rem;font-weight:600;margin:0}
+.note{color:var(--soft);font-size:.92rem;max-width:47rem;margin:.4rem 0 1.1rem}
+label.fl{display:block;font-size:.8rem;font-weight:600;letter-spacing:.02em;text-transform:uppercase;color:var(--soft);margin-bottom:.3rem}
+
+input[type=text],input[type=number]{
+  font-family:var(--sans);font-size:.98rem;color:var(--ink);background:var(--field);
+  border:1px solid var(--rule-strong);border-radius:3px;padding:.55rem .6rem;width:100%;min-height:2.6rem}
+input[type=number]{font-family:var(--mono);text-align:right;min-height:2.4rem;padding:.35rem .45rem}
+input[type=text]:hover,input[type=number]:hover{border-color:var(--signal)}
+#decision{font-family:var(--serif);font-size:1.1rem;font-weight:500;min-height:3rem}
+input:focus-visible,select:focus-visible,button:focus-visible{outline:3px solid var(--signal);outline-offset:2px}
+select{font-family:var(--mono);font-size:.95rem;color:var(--ink);background-color:var(--field);
+  border:1px solid var(--rule-strong);border-radius:3px;padding:.4rem 1.6rem .4rem .55rem;min-height:2.5rem;
+  appearance:none;-webkit-appearance:none;
+  background-image:linear-gradient(45deg,transparent 50%,var(--soft) 50%),linear-gradient(135deg,var(--soft) 50%,transparent 50%);
+  background-position:calc(100% - 15px) 55%,calc(100% - 10px) 55%;
+  background-size:5px 5px,5px 5px;background-repeat:no-repeat;cursor:pointer}
+select:hover{border-color:var(--signal)}
+button{font-family:var(--sans);font-size:.92rem;cursor:pointer;border-radius:3px}
+.ghost{background:#F1F5F7;border:1px solid var(--rule-strong);color:var(--ink);padding:.5rem .9rem;min-height:2.5rem;font-weight:500}
+.ghost:hover{background:var(--signal-tint);border-color:var(--signal);color:var(--signal)}
+.ghost.on{background:var(--signal);border-color:var(--signal);color:#fff}
+.ghost.on:hover{background:#0A4F47;color:#fff}
+.primary{background:var(--signal);border:1px solid var(--signal);color:#fff;padding:.5rem .9rem;min-height:2.5rem;font-weight:500}
+.primary:hover{background:#0A4F47}
+.toolbar{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1rem;align-items:center}
+.kill{border:1px solid transparent;background:transparent;color:var(--soft);font-size:1.15rem;line-height:1;
+  width:2.3rem;height:2.3rem;flex:none;display:inline-flex;align-items:center;justify-content:center}
+.kill:hover{color:var(--flag);background:var(--flag-tint);border-color:var(--flag)}
+.rowline{display:flex;align-items:center;gap:.6rem;margin-bottom:.5rem}
+.rowline .tag{font-family:var(--mono);font-size:.85rem;font-weight:600;color:var(--soft);
+  background:#EDF1F4;border:1px solid var(--rule);border-radius:3px;width:1.8rem;height:1.8rem;flex:none;
+  display:inline-flex;align-items:center;justify-content:center}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:1.8rem}
+
+.tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:collapse;font-size:.94rem;min-width:34rem}
+th,td{text-align:left;padding:.55rem .45rem;border-bottom:1px solid var(--rule);vertical-align:middle}
+thead th{background:#F1F5F7;border-bottom:2px solid var(--rule-strong);font-weight:600;font-size:.88rem;position:sticky;top:0}
+tbody tr:hover{background:#F7FAFB}
+td.n,th.n{text-align:right;font-family:var(--mono)}
+td.wcell input{width:4.6rem}
+tfoot td{border-bottom:0;border-top:2px solid var(--ink);font-weight:600;padding-top:.7rem}
+tfoot td.n{font-size:1.02rem}
+.hidew td.wcell,.hidew th.wcol,.hidew td.wshare{visibility:hidden}
+
+.budget{font-family:var(--mono);font-size:.9rem;margin:.8rem 0 0;padding:.5rem .7rem;border-left:4px solid var(--signal);background:var(--signal-tint);border-radius:0 3px 3px 0}
+.budget.over{border-left-color:var(--flag);background:var(--flag-tint)}
+.bar{height:.85rem;background:#DDE4EA;border:1px solid var(--rule);border-radius:2px}
+.bar i{display:block;height:100%;background:var(--signal)}
+.result{padding:1rem;border:1px solid var(--rule);border-radius:3px;background:#F7FAFB}
+.result .head{font-family:var(--serif);font-size:1.15rem;font-weight:600;margin-bottom:.6rem}
+.result p{margin:.5rem 0;font-size:.93rem}
+.rank{display:grid;grid-template-columns:minmax(7rem,14rem) 1fr 4.6rem;align-items:center;gap:.7rem;margin-bottom:.45rem;font-size:.94rem}
+.rank .bar i{background:var(--alt)}
+.rank.lead .bar i{background:var(--signal)}
+.rank.lead span:first-child{font-weight:600}
+.rank .pct{font-family:var(--mono);text-align:right}
+.drow{display:grid;grid-template-columns:minmax(7rem,13rem) 1fr;align-items:center;gap:.7rem;margin-bottom:.4rem;font-size:.91rem}
+.dbar{position:relative;height:.85rem;background:#DDE4EA;border:1px solid var(--rule);border-radius:2px}
+.dbar .mid{position:absolute;left:50%;top:-1px;bottom:-1px;width:1px;background:var(--rule-strong)}
+.dbar i{position:absolute;top:0;height:100%}
+.legend{font-size:.87rem;color:var(--soft);margin-top:.6rem}
+.swatch{display:inline-block;width:.75rem;height:.75rem;margin-right:.3rem;border:1px solid rgba(0,0,0,.15)}
+.hint{font-size:.87rem;color:var(--soft);margin-top:.6rem}
+.count{font-family:var(--mono);font-size:.85rem;color:var(--soft);margin:0}
+.sub{font-family:var(--serif);font-size:1rem;font-weight:600;margin:1.3rem 0 .5rem}
+.flip{margin-top:1rem;padding:.7rem .85rem;border-left:4px solid var(--alt);background:#EEF2F7;font-size:.91rem;border-radius:0 3px 3px 0}
+.flip b{font-family:var(--mono)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media print{
+  body{background:#fff;padding:0}
+  section{border:0;border-top:1px solid #999;box-shadow:none;page-break-inside:avoid}
+  .toolbar,.ghost,.primary,.kill{display:none}
+  .hidew td.wcell,.hidew th.wcol,.hidew td.wshare{visibility:visible}
+}
+@media (max-width:660px){
+  .cols,.rank,.drow{grid-template-columns:1fr}
+  .rank .pct{text-align:left}
+  body{padding:1.2rem .8rem 4rem}
+}
+</style>
+</head>
+<body>
+<div class="sheet">
+
+<header>
+  <h1>Weighted scoring matrix</h1>
+  <p class="lede">Allocate weights across criteria, score each option, and see what is actually driving the ranking. Scales to any number of criteria and options.</p>
+</header>
+
+<section>
+  <div class="step"><span class="num">1</span><h2>The decision</h2></div>
+  <p class="note">State it as a question with a real answer.</p>
+  <label class="fl" for="decision">Decision</label>
+  <input type="text" id="decision" placeholder="Which option should we choose, and why?">
+</section>
+
+<section>
+  <div class="cols">
+    <div>
+      <div class="step"><span class="num">2</span><h2>Criteria</h2></div>
+      <p class="note">What the choice actually turns on. Split anything that hides two different things, since "growth" often means both skill and earnings, and they can point opposite ways.</p>
+      <div id="critList"></div>
+      <button class="ghost" id="addCrit">+ Add criterion</button>
+    </div>
+    <div>
+      <div class="step"><span class="num">3</span><h2>Options</h2></div>
+      <p class="note">The alternatives on the table. Include the status quo as an option, since leaving it out quietly treats it as free.</p>
+      <div id="optList"></div>
+      <button class="ghost" id="addOpt">+ Add option</button>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="step"><span class="num">4</span><h2>Weights and scores</h2></div>
+  <p class="note">Allocate 100 points across the criteria first, before scoring anything. Weights set after the scores tend to bend toward the answer already preferred, so lock them in and then use blind scoring to keep them out of view.</p>
+  <div class="toolbar" style="margin-top:0;margin-bottom:1rem">
+    <button class="ghost" id="blind">Blind scoring: off</button>
+    <button class="ghost" id="norm">Normalise to 100</button>
+    <button class="ghost" id="equal">Equal weights</button>
+    <label class="count" for="scale" style="margin-left:.3rem">Score scale</label>
+    <select id="scale">
+      <option value="5">1 to 5</option>
+      <option value="7">1 to 7</option>
+      <option value="10" selected>1 to 10</option>
+    </select>
+  </div>
+  <div class="tablewrap"><table id="mtx"></table></div>
+  <div class="budget" id="budget"></div>
+  <p class="hint" id="scaleHint"></p>
+</section>
+
+<section>
+  <div class="step"><span class="num">5</span><h2>Result</h2></div>
+  <div id="result"></div>
+</section>
+
+<div class="toolbar">
+  <button class="primary" id="save">Save to file</button>
+  <button class="ghost" id="loadBtn">Load from file</button>
+  <input type="file" id="loadFile" accept="application/json" style="display:none">
+  <button class="ghost" id="csv">Export CSV</button>
+  <button class="ghost" onclick="window.print()">Print or save as PDF</button>
+  <button class="ghost" id="reset">Reset</button>
+</div>
+<p class="hint">Nothing is stored in the browser. Save to a file to keep a decision, and load it back to carry on.</p>
+
+</div>
+<script>
+let uid=0;
+const mk=(n,w)=>({id:"x"+(++uid),name:n,w:w===undefined?20:w});
+let state={
+  decision:"",
+  criteria:[mk("Criterion 1",30),mk("Criterion 2",25),mk("Criterion 3",25),mk("Criterion 4",20)],
+  options:[mk("Option A"),mk("Option B"),mk("Option C")],
+  scores:{},scale:10,blind:false
+};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const mid=()=>Math.ceil(state.scale/2);
+
+/* lists rebuild only on add or remove */
+function listEditor(boxId,arr,letter,min,kind){
+  const box=document.getElementById(boxId);
+  box.innerHTML="";
+  arr.forEach((it,i)=>{
+    const row=document.createElement("div");row.className="rowline";
+    const tag=document.createElement("span");tag.className="tag";
+    tag.textContent=letter?String.fromCharCode(65+i):(i+1);
+    row.appendChild(tag);
+    const inp=document.createElement("input");
+    inp.type="text";inp.value=it.name;
+    inp.setAttribute("aria-label",kind+" "+(i+1)+" name");
+    inp.addEventListener("input",e=>{it.name=e.target.value;refreshLabels();compute()});
+    row.appendChild(inp);
+    if(arr.length>min){
+      const b=document.createElement("button");
+      b.className="kill";b.innerHTML="&times;";b.title="Remove";
+      b.setAttribute("aria-label","Remove "+kind+" "+(i+1));
+      b.addEventListener("click",()=>{arr.splice(i,1);renderAll()});
+      row.appendChild(b);
+    }
+    box.appendChild(row);
+  });
+}
+function refreshLabels(){
+  const byId={};
+  state.criteria.concat(state.options).forEach(it=>byId[it.id]=it.name);
+  document.querySelectorAll("[data-nm]").forEach(el=>{
+    const n=byId[el.getAttribute("data-nm")];
+    if(n!==undefined)el.textContent=n;
+  });
+}
+
+/* matrix rebuilds only on structural change or scale change */
+function renderMatrix(){
+  const t=document.getElementById("mtx");
+  t.innerHTML="";
+  t.className=state.blind?"hidew":"";
+  const thead=document.createElement("thead");
+  const hr=document.createElement("tr");
+  hr.innerHTML="<th>Criterion</th><th class='n wcol'>Weight</th><th class='n wcol'>Share</th>"+
+    state.options.map(o=>"<th class='n'><span data-nm='"+o.id+"'>"+esc(o.name)+"</span></th>").join("");
+  thead.appendChild(hr);t.appendChild(thead);
+
+  const tb=document.createElement("tbody");
+  state.criteria.forEach((c,i)=>{
+    const tr=document.createElement("tr");
+    const td=document.createElement("td");
+    td.innerHTML="<span data-nm='"+c.id+"'>"+esc(c.name)+"</span>";
+    tr.appendChild(td);
+
+    const wtd=document.createElement("td");wtd.className="n wcell";
+    const wi=document.createElement("input");
+    wi.type="number";wi.min=0;wi.max=100;wi.step=1;wi.value=c.w;
+    wi.setAttribute("aria-label","Weight for "+c.name);
+    wi.addEventListener("input",e=>{c.w=Math.max(0,Number(e.target.value)||0);compute()});
+    wtd.appendChild(wi);tr.appendChild(wtd);
+
+    const sh=document.createElement("td");sh.className="n wshare";sh.id="share-"+c.id;
+    tr.appendChild(sh);
+
+    state.options.forEach(o=>{
+      const cell=document.createElement("td");cell.className="n";
+      const k=c.id+"::"+o.id;
+      if(!(k in state.scores)||state.scores[k]>state.scale)state.scores[k]=mid();
+      const sel=document.createElement("select");
+      sel.setAttribute("aria-label",o.name+" on "+c.name);
+      for(let v=1;v<=state.scale;v++){
+        const op=document.createElement("option");op.value=v;op.textContent=v;
+        if(state.scores[k]===v)op.selected=true;sel.appendChild(op);
+      }
+      sel.addEventListener("change",e=>{state.scores[k]=Number(e.target.value);compute()});
+      cell.appendChild(sel);tr.appendChild(cell);
+    });
+    tb.appendChild(tr);
+  });
+  t.appendChild(tb);
+
+  const tf=document.createElement("tfoot");
+  const fr=document.createElement("tr");
+  fr.innerHTML="<td>Weighted total</td><td class='n wcell' id='wsum'></td><td class='n wshare'>100%</td>"+
+    state.options.map(o=>"<td class='n' id='tot-"+o.id+"'></td>").join("");
+  tf.appendChild(fr);t.appendChild(tf);
+
+  document.getElementById("scaleHint").textContent=
+    "1 is poor, "+state.scale+" is excellent, judged on each criterion separately. Score what is known rather than what is promised.";
+}
+
+function compute(){
+  const sum=state.criteria.reduce((s,c)=>s+c.w,0);
+  const b=document.getElementById("budget");
+  b.textContent = sum===100 ? "100 of 100 points allocated."
+    : sum<100 ? (100-sum)+" of 100 points still to allocate. Shares below are normalised, so the ranking is valid either way."
+    : (sum-100)+" points over budget. Shares below are normalised, so the ranking is valid either way.";
+  b.className="budget"+(sum===100?"":" over");
+  const ws=document.getElementById("wsum");if(ws)ws.textContent=sum;
+
+  const w=state.criteria.map(c=>sum>0?c.w/sum:1/Math.max(1,state.criteria.length));
+  state.criteria.forEach((c,i)=>{
+    const el=document.getElementById("share-"+c.id);
+    if(el)el.textContent=(w[i]*100).toFixed(1)+"%";
+  });
+
+  const totals=state.options.map(o=>
+    state.criteria.reduce((s,c,i)=>s+w[i]*(state.scores[c.id+"::"+o.id]||mid()),0));
+  state.options.forEach((o,oi)=>{
+    const el=document.getElementById("tot-"+o.id);
+    if(el)el.textContent=totals[oi].toFixed(2);
+  });
+
+  const idx=totals.map((t,i)=>i).sort((a,b)=>totals[b]-totals[a]);
+  const top=idx[0],second=idx[1];
+  const res=document.getElementById("result");
+  let html="<div class='head'>"+esc(state.options[top].name)+" ranks first at "+totals[top].toFixed(2)+" out of "+state.scale+"</div>";
+  const mxT=Math.max(...totals,0.0001);
+  idx.forEach((i,pos)=>{
+    html+="<div class='rank"+(pos===0?" lead":"")+"'><span>"+esc(state.options[i].name)+"</span>"+
+      "<span class='bar'><i style='width:"+(totals[i]/mxT*100)+"%'></i></span>"+
+      "<span class='pct'>"+totals[i].toFixed(2)+"</span></div>";
+  });
+
+  if(second!==undefined){
+    const margin=totals[top]-totals[second];
+    const relative=margin/state.scale;
+    html+="<p>Lead over "+esc(state.options[second].name)+": "+margin.toFixed(2)+" points on a 1 to "+state.scale+" scale. "+
+      (relative<0.04?"That is inside the noise of this kind of scoring. Treat them as tied and decide on grounds the matrix does not capture."
+       :relative<0.12?"A real but modest lead, sensitive to how the weights were set."
+       :"A clear lead. If it still feels wrong, the missing criterion is the thing to look for.")+"</p>";
+
+    // contribution breakdown
+    const per=state.criteria.map((c,i)=>
+      w[i]*((state.scores[c.id+"::"+state.options[top].id]||mid())-(state.scores[c.id+"::"+state.options[second].id]||mid())));
+    const m2=Math.max(0.0001,...per.map(Math.abs));
+    html+="<div style='margin-top:1.1rem'>";
+    state.criteria.forEach((c,i)=>{
+      const d=per[i],len=Math.abs(d)/m2*50;
+      const st=d>=0?"right:50%;width:"+len+"%;background:var(--signal)":"left:50%;width:"+len+"%;background:var(--alt)";
+      html+="<div class='drow'><span>"+esc(c.name)+"</span><span class='dbar'><span class='mid'></span><i style='"+st+"'></i></span></div>";
+    });
+    html+="</div><div class='legend'><span class='swatch' style='background:var(--signal)'></span>favours "+esc(state.options[top].name)+
+      " &nbsp; <span class='swatch' style='background:var(--alt)'></span>favours "+esc(state.options[second].name)+
+      ". Bar length is weight times score gap, so it shows which criteria are carrying the result.</div>";
+
+    // flip test on the top two
+    const A=state.options[top].id,B=state.options[second].id;
+    const flips=[];
+    state.criteria.forEach((c,k)=>{
+      const others=state.criteria.reduce((s,cc,i)=>i===k?s:s+cc.w,0);
+      if(others<=0)return;
+      const SA=state.criteria.reduce((s,cc,i)=>i===k?s:s+cc.w*(state.scores[cc.id+"::"+A]||mid()),0)/others;
+      const SB=state.criteria.reduce((s,cc,i)=>i===k?s:s+cc.w*(state.scores[cc.id+"::"+B]||mid()),0)/others;
+      const D=SA-SB;
+      const d=(state.scores[c.id+"::"+A]||mid())-(state.scores[c.id+"::"+B]||mid());
+      const denom=D-d;
+      if(Math.abs(denom)<1e-9)return;
+      const x=D/denom;                       // required share of total weight
+      if(x>=0&&x<=1)flips.push({name:c.name,to:x*100,from:sum>0?c.w/sum*100:0});
+    });
+    if(flips.length){
+      flips.sort((p,q)=>Math.abs(p.to-p.from)-Math.abs(q.to-q.from));
+      const f=flips[0];
+      html+="<div class='flip'>Flip test: the ranking of the top two reverses if <b>"+esc(f.name)+
+        "</b> moves from <b>"+f.from.toFixed(0)+"%</b> of the weight to about <b>"+f.to.toFixed(0)+
+        "%</b>. If that shift is arguable, the decision is resting on that one criterion.</div>";
+    }else{
+      html+="<div class='flip'>Flip test: no single weight change reverses the top two. The result does not depend on one criterion.</div>";
+    }
+  }
+  res.innerHTML=html;
+}
+
+function renderAll(){
+  listEditor("critList",state.criteria,true,2,"criterion");
+  listEditor("optList",state.options,false,2,"option");
+  renderMatrix();
+  compute();
+}
+
+document.getElementById("addCrit").addEventListener("click",()=>{
+  if(state.criteria.length>=15)return;state.criteria.push(mk("New criterion",0));renderAll();
+});
+document.getElementById("addOpt").addEventListener("click",()=>{
+  if(state.options.length>=8)return;state.options.push(mk("New option"));renderAll();
+});
+document.getElementById("decision").addEventListener("input",e=>{state.decision=e.target.value});
+document.getElementById("blind").addEventListener("click",e=>{
+  state.blind=!state.blind;
+  e.target.textContent="Blind scoring: "+(state.blind?"on":"off");
+  e.target.classList.toggle("on",state.blind);
+  document.getElementById("mtx").className=state.blind?"hidew":"";
+});
+document.getElementById("norm").addEventListener("click",()=>{
+  const sum=state.criteria.reduce((s,c)=>s+c.w,0);
+  if(sum<=0)return;
+  state.criteria.forEach(c=>c.w=Math.round(c.w/sum*100));
+  renderMatrix();compute();
+});
+document.getElementById("equal").addEventListener("click",()=>{
+  const n=state.criteria.length;
+  state.criteria.forEach(c=>c.w=Math.round(100/n));
+  renderMatrix();compute();
+});
+document.getElementById("scale").addEventListener("change",e=>{
+  state.scale=Number(e.target.value);
+  Object.keys(state.scores).forEach(k=>{if(state.scores[k]>state.scale)state.scores[k]=state.scale});
+  renderMatrix();compute();
+});
+
+document.getElementById("save").addEventListener("click",()=>{
+  const blob=new Blob([JSON.stringify(state,null,2)],{type:"application/json"});
+  const a=document.createElement("a");a.href=URL.createObjectURL(blob);
+  a.download=((state.decision||"scoring-matrix").replace(/[^a-z0-9]+/gi,"-").toLowerCase().replace(/^-+|-+$/g,"").slice(0,50)||"scoring-matrix")+".json";
+  a.click();URL.revokeObjectURL(a.href);
+});
+document.getElementById("loadBtn").addEventListener("click",()=>document.getElementById("loadFile").click());
+document.getElementById("loadFile").addEventListener("change",e=>{
+  const f=e.target.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=()=>{
+    try{
+      const s=JSON.parse(r.result);
+      if(!Array.isArray(s.criteria)||!Array.isArray(s.options))throw new Error("bad");
+      state=s;state.scores=state.scores||{};state.scale=state.scale||10;state.blind=!!state.blind;
+      state.criteria.concat(state.options).forEach(it=>{
+        const n=parseInt(String(it.id).replace(/\D/g,""),10);
+        if(!isNaN(n)&&n>uid)uid=n;
+      });
+      document.getElementById("decision").value=state.decision||"";
+      document.getElementById("scale").value=state.scale;
+      const bb=document.getElementById("blind");
+      bb.textContent="Blind scoring: "+(state.blind?"on":"off");
+      bb.classList.toggle("on",state.blind);
+      renderAll();
+    }catch(err){alert("That file could not be read as a saved matrix.")}
+  };
+  r.readAsText(f);e.target.value="";
+});
+document.getElementById("csv").addEventListener("click",()=>{
+  const q=s=>'"'+String(s).replace(/"/g,'""')+'"';
+  const sum=state.criteria.reduce((s,c)=>s+c.w,0);
+  const w=state.criteria.map(c=>sum>0?c.w/sum:0);
+  let rows=[["Criterion","Weight","Share"].concat(state.options.map(o=>o.name)).map(q).join(",")];
+  state.criteria.forEach((c,i)=>{
+    rows.push([q(c.name),c.w,(w[i]*100).toFixed(1)+"%"]
+      .concat(state.options.map(o=>state.scores[c.id+"::"+o.id]||mid())).join(","));
+  });
+  const totals=state.options.map(o=>state.criteria.reduce((s,c,i)=>s+w[i]*(state.scores[c.id+"::"+o.id]||mid()),0));
+  rows.push([q("Weighted total"),sum,"100%"].concat(totals.map(t=>t.toFixed(2))).join(","));
+  const blob=new Blob([rows.join("\n")],{type:"text/csv"});
+  const a=document.createElement("a");a.href=URL.createObjectURL(blob);
+  a.download="scoring-matrix.csv";a.click();URL.revokeObjectURL(a.href);
+});
+document.getElementById("reset").addEventListener("click",()=>{
+  if(!confirm("Clear everything and start a new matrix?"))return;
+  state={decision:"",criteria:[mk("Criterion 1",34),mk("Criterion 2",33),mk("Criterion 3",33)],
+         options:[mk("Option A"),mk("Option B")],scores:{},scale:10,blind:false};
+  document.getElementById("decision").value="";
+  document.getElementById("scale").value=10;
+  const bb=document.getElementById("blind");bb.textContent="Blind scoring: off";bb.classList.remove("on");
+  renderAll();
+});
+
+renderAll();
+</script>
+</body>
+</html>
