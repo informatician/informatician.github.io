@@ -67,7 +67,7 @@
 <div class="stat"><div class="statNum">6</div><div class="statLabel">Course-Policy Archetypes</div><p>Select a pedagogically appropriate default relationship between AI, learning, and assessment.</p><button type="button" class="statAction" data-feature="archetypes" aria-expanded="false">View the 6 Archetypes</button></div>
 <div class="stat"><div class="statNum">5</div><div class="statLabel">Assessment-Level AI Options</div><p>Set the overall AI permission pattern for each assessment.</p><button type="button" class="statAction" data-feature="levels" aria-expanded="false">View the 5 AI Levels</button></div>
 <div class="stat"><div class="statNum">11</div><div class="statLabel">Permitted AI Functions</div><p>Specify what AI may actually be used to do within an assessment.</p><button type="button" class="statAction" data-feature="functions" aria-expanded="false">View the 11 Functions</button></div>
-<div class="stat"><div class="statNum">14</div><div class="statLabel">Responsible-Use Clauses</div><p>Add cross-cutting clauses addressing disclosure, verification, academic integrity, privacy, copyright, accessibility, environmental and labour impacts, group work, and other responsibilities.</p><button type="button" class="statAction" data-feature="clauses" aria-expanded="false">View the 14 Clauses</button></div>
+<div class="stat"><div class="statNum">15</div><div class="statLabel">Responsible-Use Clauses</div><p>Add cross-cutting clauses addressing disclosure, citation, reflection, verification, academic integrity, privacy, copyright, accessibility, environmental and labour impacts, group work, and other responsibilities.</p><button type="button" class="statAction" data-feature="clauses" aria-expanded="false">View the 15 Clauses</button></div>
 </div>
 <div id="featureDetails" class="featureDetails" hidden aria-live="polite"><div class="featureDetailsHead"><div><h3 id="featureTitle"></h3><p id="featureIntro"></p></div><button type="button" class="featureClose" id="featureClose">Close</button></div><div id="featureSummary" class="summaryGrid"></div></div>
 </section>
@@ -121,11 +121,11 @@
 #ai-policy-selector .boundaryGrid label{display:block;font-size:12px;font-weight:800;margin-bottom:5px}
 #ai-policy-selector .levelKey{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin:16px 0}
 #ai-policy-selector .level{border-left:3px solid var(--border);padding:7px 9px;font-size:12px;line-height:1.4;color:var(--muted)}
-#ai-policy-selector .level strong{display:block;color:var(--text);margin-bottom:2px}#ai-policy-selector .clauseGrid{display:grid;gap:10px}#ai-policy-selector .clauseFeaturedGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;align-items:stretch}#ai-policy-selector .clauseSideStack{display:grid;grid-template-rows:repeat(2,minmax(0,1fr));gap:10px}#ai-policy-selector .clauseStandardGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}#ai-policy-selector .clause{border:1px solid var(--border);border-radius:12px;padding:12px;background:var(--panel2);min-width:0}#ai-policy-selector .clauseDisclosure{height:100%}#ai-policy-selector .clause label{display:flex;gap:9px;align-items:flex-start;font-size:14px;font-weight:700;cursor:pointer}#ai-policy-selector .clause p{margin:6px 0 0 27px;font-size:12px;line-height:1.45;color:var(--muted)}#ai-policy-selector .recommended{font-size:10px;color:var(--good);font-weight:800;text-transform:uppercase;letter-spacing:.04em;margin-left:5px}#ai-policy-selector .blueprint{background:light-dark(#eef2f5,#151a20);border:1px solid var(--border);border-radius:15px;padding:18px;white-space:pre-wrap;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px;line-height:1.58;max-height:620px;overflow:auto}#ai-policy-selector .empty{color:var(--muted);font-family:inherit}#ai-policy-selector .footerNote{font-size:12px;color:var(--muted);line-height:1.5;margin-top:12px}@media(max-width:760px){#ai-policy-selector .intro{grid-template-columns:1fr}#ai-policy-selector .outputGrid{grid-template-columns:1fr}#ai-policy-selector .choices,#ai-policy-selector .choices.two,#ai-policy-selector .recGrid,#ai-policy-selector .allGrid,#ai-policy-selector .clauseFeaturedGrid,#ai-policy-selector .clauseStandardGrid{grid-template-columns:1fr}#ai-policy-selector .assessmentTop,#ai-policy-selector .boundaryGrid,#ai-policy-selector .functionGrid{grid-template-columns:1fr}#ai-policy-selector .clauseSideStack{grid-template-rows:auto}#ai-policy-selector .remove{width:100%}#ai-policy-selector .levelKey{grid-template-columns:1fr 1fr}#ai-policy-selector .body,#ai-policy-selector .stepHead{padding:17px}}
+#ai-policy-selector .level strong{display:block;color:var(--text);margin-bottom:2px}#ai-policy-selector .clauseGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}#ai-policy-selector .clause{border:1px solid var(--border);border-radius:12px;padding:12px;background:var(--panel2);min-width:0}#ai-policy-selector .clause label{display:flex;gap:9px;align-items:flex-start;font-size:14px;font-weight:700;cursor:pointer}#ai-policy-selector .clause p{margin:6px 0 0 27px;font-size:12px;line-height:1.45;color:var(--muted)}#ai-policy-selector .recommended{font-size:10px;color:var(--good);font-weight:800;text-transform:uppercase;letter-spacing:.04em;margin-left:5px}#ai-policy-selector .blueprint{background:light-dark(#eef2f5,#151a20);border:1px solid var(--border);border-radius:15px;padding:18px;white-space:pre-wrap;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px;line-height:1.58;max-height:620px;overflow:auto}#ai-policy-selector .empty{color:var(--muted);font-family:inherit}#ai-policy-selector .footerNote{font-size:12px;color:var(--muted);line-height:1.5;margin-top:12px}@media(max-width:760px){#ai-policy-selector .intro{grid-template-columns:1fr}#ai-policy-selector .outputGrid{grid-template-columns:1fr}#ai-policy-selector .choices,#ai-policy-selector .choices.two,#ai-policy-selector .recGrid,#ai-policy-selector .allGrid,#ai-policy-selector .clauseGrid{grid-template-columns:1fr}#ai-policy-selector .assessmentTop,#ai-policy-selector .boundaryGrid,#ai-policy-selector .functionGrid{grid-template-columns:1fr}#ai-policy-selector .remove{width:100%}#ai-policy-selector .levelKey{grid-template-columns:1fr 1fr}#ai-policy-selector .body,#ai-policy-selector .stepHead{padding:17px}}
 
 #ai-policy-selector .configBar{display:grid;grid-template-columns:auto minmax(260px,1fr);gap:10px 16px;align-items:center;margin:0 0 22px;padding:14px 16px;border:1px solid var(--border);border-radius:14px;background:var(--panel2)}#ai-policy-selector .configActions{display:flex;gap:9px;flex-wrap:wrap}#ai-policy-selector .configTip{font-size:12px;line-height:1.5;color:var(--muted)}#ai-policy-selector .configTip strong{color:var(--text)}#ai-policy-selector .configTip code{font-size:11px;background:var(--panel);border:1px solid var(--border);border-radius:5px;padding:2px 4px}#ai-policy-selector .configStatus{grid-column:1/-1;font-size:12px;color:var(--good);min-height:0} @media(max-width:760px){#ai-policy-selector .configBar{grid-template-columns:1fr}#ai-policy-selector .configStatus{grid-column:auto}}
 
-#ai-policy-selector .fieldExamples{font-size:11px;line-height:1.45;color:var(--muted);margin:6px 0 0 0}#ai-policy-selector .assessmentToggle .fieldExamples{margin-left:27px}#ai-policy-selector .clauseExtras{margin:10px 0 0 27px;padding:10px 11px;border:1px dashed var(--border);border-radius:10px;background:var(--panel)}#ai-policy-selector .clauseExtrasTitle{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.045em;color:var(--text);margin-bottom:6px}#ai-policy-selector .clauseExtras label{display:flex;gap:7px;align-items:flex-start;font-size:11px;font-weight:600;line-height:1.35;margin:5px 0;cursor:pointer}#ai-policy-selector .clauseExtras input[type=checkbox]{width:16px;height:16px;margin-top:0}#ai-policy-selector .clauseExtras .reflectionBlock{margin-top:9px;padding-top:8px;border-top:1px solid var(--border)}#ai-policy-selector .clauseExtras .reflectionHelp{margin:5px 0 0 23px;font-size:11px;line-height:1.4;color:var(--muted)}#ai-policy-selector .clauseExtras.disabled{opacity:.58}#ai-policy-selector .clauseExtras.disabled label{cursor:default}
+#ai-policy-selector .fieldExamples{font-size:11px;line-height:1.45;color:var(--muted);margin:6px 0 0 0}#ai-policy-selector .assessmentToggle .fieldExamples{margin-left:27px}
 #ai-policy-selector .saveConfigPanel{margin-top:16px;border:1px solid var(--border);border-radius:15px;padding:17px;background:var(--panel2);display:grid;grid-template-columns:minmax(0,1fr) auto;gap:18px;align-items:center}
 #ai-policy-selector .saveConfigPanel h3{font-size:16px;margin:0 0 6px}
 #ai-policy-selector .saveConfigPanel p{font-size:13px;line-height:1.5;color:var(--muted);margin:0}
@@ -307,7 +307,7 @@
 <script>
 (()=>{
 const root=document.getElementById('ai-policy-selector');
-const TOOL_VERSION='2.10';const CONFIG_SCHEMA_VERSION=1;
+const TOOL_VERSION='2.11';const CONFIG_SCHEMA_VERSION=1;
 if(root.dataset.ready)return;root.dataset.ready='1';
 const archetypes={
  human:{name:'Human-First Foundations',short:'Protect independent development and demonstration of foundational capabilities.',core:'Generative AI is generally not used to perform the intellectual work that the course or assessment is designed to develop and evaluate.',sample:'Generative AI use in this course is generally not permitted for completing assessed work when the purpose of the assessment is to demonstrate independent mastery of core skills. Specific exceptions will be identified by the instructor.'},
@@ -355,8 +355,9 @@ const functionDefaults={
 };
 const researchDataExtension='De-identification or anonymization alone should not be assumed to make research data appropriate for upload to a generative AI system. Use involving research data must also be consistent with applicable ethics approval, participant consent, data-access or data-use agreements, authorization from the principal investigator or data custodian, and other relevant institutional or contractual requirements.';
 const clauses={
- disclosure:{name:'AI Use Disclosure',desc:'Explain how AI participated in producing the work. Disclosure is distinct from citation, which identifies a source or object relied upon. Configure the elements that should appear in the AI Use Statement.',text:'When generative AI contributes substantively to assessed work, include a brief AI Use Statement describing how AI contributed to the work.'},
+ disclosure:{name:'AI Use Disclosure',desc:'Explain how AI participated in producing the work, including the tool or model, purpose, affected parts or stages, nature and extent of the contribution, and rationale for use. Disclosure is distinct from citation.',text:'Explain how AI participated in producing the work, identifying the tool or model used, the purpose or function for which it was used, the parts or stages of the work affected, the nature and extent of the AI contribution, and why AI was used in that way. Disclosure is distinct from citation, which identifies a source or object relied upon.'},
  citation:{name:'Citation when AI is a source or object',desc:'Use citation when AI output itself is relied upon as a source, evidence, or object of analysis. Citation and AI-use disclosure serve different purposes and may both be required.',text:'Disclosure of AI use does not replace citation. When AI-generated content is treated as a source, evidence, or object of analysis, cite or document it in the manner specified for the assessment and required citation style. If AI identifies an external source, access and consult the underlying source before relying on or citing it. Do not cite a source solely on the basis of an AI-generated summary, quotation, reference, or description.'},
+ reflection:{name:'Reflection on AI Use',desc:'Invite students to reflect on how AI affected their reasoning, understanding, decisions, or final work. Reflection is distinct from disclosure and from evidence of the AI-assisted process.',text:'Briefly reflect on how the use of AI affected your reasoning, understanding, decisions, or final work. Identify relevant insights gained through the interaction, including ideas or outputs you questioned, rejected, substantially revised, or used to improve your understanding.'},
  process:{name:'Process Evidence',desc:'Request proportionate evidence of the AI-assisted workflow when it serves the learning objective. Process Evidence documents what happened in the human-AI process rather than simply disclosing that AI was used.',text:'Where requested, retain sufficient evidence of your AI-assisted process to explain how the tool contributed to your work and how you evaluated, revised, or verified its output. The assignment instructions will specify what form of process evidence, if any, is required; complete chat histories should not be assumed unless specifically requested.'},
  group:{name:'AI Use in Group and Team Work',desc:'Clarify collective responsibility and appropriate handling of team members’ work.',text:'When generative AI is used in group work, the team is collectively responsible for AI-assisted material included in the final submission. AI use should be disclosed as required by the assignment, and team members should not upload another person’s work, personal information, peer feedback, or shared materials to an AI system without appropriate permission.'},
  verify:{name:'Verification and human accountability',desc:'Students remain accountable for facts, calculations, references, assumptions, analysis, and recommendations.',text:'You are responsible for independently evaluating and verifying AI-assisted content, including factual claims, calculations, references, quotations, assumptions, analysis, and recommendations. Verify that cited sources exist, accurately support the claims attributed to them, and have been consulted directly. The use of AI does not transfer responsibility for errors to the tool.'},
@@ -370,9 +371,6 @@ const clauses={
  integrity:{name:'Academic Integrity and Authorized AI Use',desc:'Connect course and assessment AI permissions to applicable academic integrity expectations.',text:'Students are expected to use AI only within the permissions and conditions established for the course and individual assessments. AI use should also comply with applicable academic integrity requirements. Using AI outside the permitted boundaries, misrepresenting the nature or extent of AI contribution, or failing to provide required disclosure may be addressed under applicable academic integrity rules and procedures.'},
  uncertainty:{name:'When the status of a tool or use is unclear',desc:'Provide a clear fallback when embedded or changing AI functionality creates uncertainty.',text:'If you are uncertain whether a particular AI tool, feature, or use is permitted, ask the instructor before using it for assessed work. Do not assume that a tool is permitted simply because it is built into software used in the course.'}
 };
-const defaultDisclosureSettings={toolModel:true,purpose:true,affectedParts:true,natureExtent:false,rationale:false,reflection:false};
-let disclosureSettings={...defaultDisclosureSettings};
-function normalizeDisclosureSettings(v){return{...defaultDisclosureSettings,...((v&&typeof v==='object')?v:{})}}
 let selectedArch=null;let lastProfile=null;let assessments=[];
 const profileForm=root.querySelector('#profileForm'),validation=root.querySelector('#validation'),recBox=root.querySelector('#recommendations'),recGrid=root.querySelector('#recGrid'),allGrid=root.querySelector('#allGrid');
 function checked(name){return [...profileForm.querySelectorAll(`input[name="${name}"]:checked`)].map(x=>x.value)}
@@ -413,7 +411,7 @@ renderAll();
 function recommend(p){const s=scores(p),rank=order.slice().sort((a,b)=>s[b]-s[a]);renderRecommendations(rank.slice(0,2),p)}
 function renderRecommendations(keys,p){recGrid.innerHTML=keys.map((k,i)=>`<article class="recCard ${i===0?'primaryRec':''}"><span class="tag">${i===0?'Primary Fit':'Alternative'}</span><h3>${archetypes[k].name}</h3><p>${archetypes[k].short}</p><strong class="whyLabel">Why This Was Suggested</strong><ul class="why">${reasons(k,p).map(x=>`<li>${x}</li>`).join('')}</ul><label class="selectArch"><input type="radio" name="archChoice" value="${k}" ${i===0?'checked':''}> Use this as the course-level archetype</label></article>`).join('');recBox.classList.add('show');selectedArch=keys[0];recGrid.querySelectorAll('input[name=archChoice]').forEach(x=>x.addEventListener('change',()=>{selectedArch=x.value;enableBuilders();setClauseDefaults();updateBlueprint()}));enableBuilders();setClauseDefaults();updateBlueprint()}
 profileForm.addEventListener('submit',e=>{e.preventDefault();const p=collect();if(!valid(p)){validation.textContent='Please answer all six areas before generating a recommendation.';return}validation.textContent='';lastProfile=p;recommend(p)});
-root.querySelector('#resetBtn').addEventListener('click',()=>{profileForm.reset();validation.textContent='';recBox.classList.remove('show');selectedArch=null;lastProfile=null;assessments=[];disclosureSettings={...defaultDisclosureSettings};root.querySelector('#assessmentControls').hidden=true;root.querySelector('#assessmentDisabled').hidden=false;root.querySelector('#clauseControls').hidden=true;root.querySelector('#clauseDisabled').hidden=false;root.querySelector('#instructorNotes').innerHTML='<span class="empty">Your instructor notes will appear here after Step 1.</span>';root.querySelector('#policyText').innerHTML='<span class="empty">Your policy text will appear here after Step 1.</span>';root.querySelector('#copyStatus').textContent='';root.querySelector('#configStatus').textContent='';});
+root.querySelector('#resetBtn').addEventListener('click',()=>{profileForm.reset();validation.textContent='';recBox.classList.remove('show');selectedArch=null;lastProfile=null;assessments=[];root.querySelector('#assessmentControls').hidden=true;root.querySelector('#assessmentDisabled').hidden=false;root.querySelector('#clauseControls').hidden=true;root.querySelector('#clauseDisabled').hidden=false;root.querySelector('#instructorNotes').innerHTML='<span class="empty">Your instructor notes will appear here after Step 1.</span>';root.querySelector('#policyText').innerHTML='<span class="empty">Your policy text will appear here after Step 1.</span>';root.querySelector('#copyStatus').textContent='';root.querySelector('#configStatus').textContent='';});
 function newAssessment(level='learning'){
  const f=new Set(functionDefaults[level]||[]);
  return {name:'',level,directed:false,directedDesc:'',functions:[...f],studentLed:'',conditions:''}
@@ -503,7 +501,7 @@ function escapeHtml(s){return String(s).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':
 function suggestedClauses(){
  const set=new Set(['verify','integrity','uncertainty','impacts']);
  if(['assistant','transparent','integrated','exploration','specific'].includes(selectedArch))set.add('disclosure');
- if(['transparent','integrated','exploration'].includes(selectedArch))set.add('defend');
+ if(['transparent','integrated','exploration'].includes(selectedArch)){set.add('defend');set.add('reflection')}
  if(['integrated','exploration'].includes(selectedArch)){set.add('bias');set.add('access')}
  if(lastProfile){
    if(lastProfile.assess.includes('project'))set.add('group');
@@ -515,21 +513,8 @@ function suggestedClauses(){
  }
  return set
 }
-function disclosureOptionsHtml(){return `<div class="clauseExtras" id="disclosureExtras">
-  <div class="clauseExtrasTitle">AI Use Statement elements</div>
-  <label><input type="checkbox" class="disclosureSetting" data-setting="toolModel" ${disclosureSettings.toolModel?'checked':''}> Tool or model used</label>
-  <label><input type="checkbox" class="disclosureSetting" data-setting="purpose" ${disclosureSettings.purpose?'checked':''}> Purpose or function for which AI was used</label>
-  <label><input type="checkbox" class="disclosureSetting" data-setting="affectedParts" ${disclosureSettings.affectedParts?'checked':''}> Parts or stages of the work affected</label>
-  <label><input type="checkbox" class="disclosureSetting" data-setting="natureExtent" ${disclosureSettings.natureExtent?'checked':''}> Nature or extent of the AI contribution</label>
-  <label><input type="checkbox" class="disclosureSetting" data-setting="rationale" ${disclosureSettings.rationale?'checked':''}> Rationale for using AI in that way</label>
-  <div class="reflectionBlock">
-    <label><input type="checkbox" class="disclosureSetting" data-setting="reflection" ${disclosureSettings.reflection?'checked':''}> Append a Reflection on AI Use</label>
-    <div class="reflectionHelp">Reflection is metacognitive rather than evidentiary. It asks what the student learned, reconsidered, rejected, or changed through the interaction, and is distinct from both disclosure and Process Evidence.</div>
-  </div>
-</div>`}
-function updateDisclosureOptionState(){const main=root.querySelector('input[name="clause"][value="disclosure"]'),extras=root.querySelector('#disclosureExtras');if(!extras)return;const enabled=!!(main&&main.checked);extras.classList.toggle('disabled',!enabled);extras.querySelectorAll('input').forEach(x=>x.disabled=!enabled)}
-function clauseCardHtml(k,c,sug,extraClass=''){return `<div class="clause ${extraClass}"><label><input type="checkbox" name="clause" value="${k}" ${sug.has(k)?'checked':''}> <span>${c.name}${sug.has(k)?'<span class="recommended">Suggested</span>':''}</span></label><p>${c.desc}</p>${k==='disclosure'?disclosureOptionsHtml():''}</div>`}
-function renderClauses(){const sug=suggestedClauses(),grid=root.querySelector('#clauseGrid');const featured=['disclosure','citation','process'];const remaining=Object.entries(clauses).filter(([k])=>!featured.includes(k));grid.innerHTML=`<div class="clauseFeaturedGrid">${clauseCardHtml('disclosure',clauses.disclosure,sug,'clauseDisclosure')}<div class="clauseSideStack">${clauseCardHtml('citation',clauses.citation,sug)}${clauseCardHtml('process',clauses.process,sug)}</div></div><div class="clauseStandardGrid">${remaining.map(([k,c])=>clauseCardHtml(k,c,sug)).join('')}</div>`;grid.querySelectorAll('input[name=clause]').forEach(x=>x.addEventListener('change',()=>{updateDisclosureOptionState();updateBlueprint()}));grid.querySelectorAll('.disclosureSetting').forEach(x=>x.addEventListener('change',e=>{disclosureSettings[e.target.dataset.setting]=e.target.checked;updateBlueprint()}));updateDisclosureOptionState()}
+function clauseCardHtml(k,c,sug){return `<div class="clause"><label><input type="checkbox" name="clause" value="${k}" ${sug.has(k)?'checked':''}> <span>${c.name}${sug.has(k)?'<span class="recommended">Suggested</span>':''}</span></label><p>${c.desc}</p></div>`}
+function renderClauses(){const sug=suggestedClauses(),grid=root.querySelector('#clauseGrid');grid.innerHTML=Object.entries(clauses).map(([k,c])=>clauseCardHtml(k,c,sug)).join('');grid.querySelectorAll('input[name=clause]').forEach(x=>x.addEventListener('change',updateBlueprint))}
 function setClauseDefaults(){if(root.querySelector('#clauseControls').hidden)return;renderClauses()}
 function profileSummary(p){
  if(!p)return'';
@@ -558,10 +543,8 @@ function assessmentPolicyText(a){
  if((a.conditions||'').trim())txt+=`\n\nAdditional boundaries or conditions: ${a.conditions.trim()}`;
  return txt
 }
-function joinNatural(items){if(items.length===0)return'';if(items.length===1)return items[0];if(items.length===2)return`${items[0]} and ${items[1]}`;return`${items.slice(0,-1).join(', ')}, and ${items[items.length-1]}`}
-function disclosurePolicyText(){const items=[];if(disclosureSettings.toolModel)items.push('the tool or model used');if(disclosureSettings.purpose)items.push('the purpose or function for which AI was used');if(disclosureSettings.affectedParts)items.push('the parts or stages of the work affected');if(disclosureSettings.natureExtent)items.push('the nature or extent of the AI contribution');if(disclosureSettings.rationale)items.push('why you chose to use AI in that way');let txt='When generative AI contributes substantively to assessed work, include a brief AI Use Statement';txt+=items.length?` identifying ${joinNatural(items)}.`:' describing how AI contributed to the work.';if(disclosureSettings.reflection)txt+='\n\nReflection on AI Use: Briefly explain how using AI affected your reasoning, understanding, decisions, or final work. Identify anything you questioned, rejected, substantially revised, or learned through the interaction.';return txt}
 function clausePolicyText(k){
- let txt=k==='disclosure'?disclosurePolicyText():clauses[k].text;
+ let txt=clauses[k].text;
  if(k==='confidential'&&lastProfile&&lastProfile.risk.includes('research'))txt+=` ${researchDataExtension}`;
  return txt
 }
@@ -599,7 +582,7 @@ ASSESSMENT WORKFLOW
 ${assessmentNotes}
 
 SELECTED CROSS-CUTTING CLAUSES
-${selected.length?selected.map(k=>`• ${clauses[k].name}`).join('\n'):'• None selected.'}${selected.includes('disclosure')?`\n\nAI USE STATEMENT CONFIGURATION\n• Included elements: ${joinNatural([disclosureSettings.toolModel?'tool/model':null,disclosureSettings.purpose?'purpose/function':null,disclosureSettings.affectedParts?'affected parts/stages':null,disclosureSettings.natureExtent?'nature/extent of contribution':null,disclosureSettings.rationale?'rationale for use':null].filter(Boolean))||'general description of AI contribution'}\n• Reflection on AI Use: ${disclosureSettings.reflection?'Included':'Not included'}`:''}
+${selected.length?selected.map(k=>`• ${clauses[k].name}`).join('\n'):'• None selected.'}
 
 IMPLEMENTATION REMINDERS
 • Assessment-specific instructions take precedence over the course-level default for that assessment.
@@ -632,14 +615,14 @@ Assessment-specific AI instructions take precedence over the course-level defaul
 
 
 function currentClauses(){return [...root.querySelectorAll('input[name="clause"]:checked')].map(x=>x.value)}
-function buildConfig(){return{schemaVersion:CONFIG_SCHEMA_VERSION,toolVersion:TOOL_VERSION,savedAt:new Date().toISOString(),courseProfile:collect(),selectedArchetype:selectedArch||null,assessments:assessments.map(a=>({name:a.name||'',level:a.level||'learning',directed:!!a.directed,directedDesc:a.directedDesc||'',functions:Array.isArray(a.functions)?a.functions:[],studentLed:a.studentLed||'',conditions:a.conditions||''})),clauses: currentClauses(),disclosureSettings:{...disclosureSettings}}}
+function buildConfig(){return{schemaVersion:CONFIG_SCHEMA_VERSION,toolVersion:TOOL_VERSION,savedAt:new Date().toISOString(),courseProfile:collect(),selectedArchetype:selectedArch||null,assessments:assessments.map(a=>({name:a.name||'',level:a.level||'learning',directed:!!a.directed,directedDesc:a.directedDesc||'',functions:Array.isArray(a.functions)?a.functions:[],studentLed:a.studentLed||'',conditions:a.conditions||''})),clauses: currentClauses()}}
 function setConfigStatus(msg,isError=false){root.querySelectorAll('#configStatusTop,#configStatusBottom').forEach(el=>{el.textContent=msg;el.style.color=isError?'var(--danger)':'var(--good)'})}
 function safeFilePart(s){return(s||'').trim().replace(/[^a-z0-9]+/gi,'-').replace(/^-+|-+$/g,'').slice(0,64)}
 function suggestedFilename(){const d=new Date(),ym=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;return `Course-AI-policy-${ym}.json`}
 function saveConfiguration(){try{const blob=new Blob([JSON.stringify(buildConfig(),null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=suggestedFilename();document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),0);setConfigStatus('Configuration saved. You may rename the JSON file using your course code or course name and date.')}catch(err){setConfigStatus('The configuration could not be saved.',true)}}
 function setRadio(name,value){profileForm.querySelectorAll(`input[name="${name}"]`).forEach(x=>x.checked=x.value===value)}
 function setChecks(name,values){const vals=new Set(Array.isArray(values)?values:[]);profileForm.querySelectorAll(`input[name="${name}"]`).forEach(x=>x.checked=vals.has(x.value))}
-function setClauseChecks(values){const vals=new Set(Array.isArray(values)?values:[]);root.querySelectorAll('input[name="clause"]').forEach(x=>x.checked=vals.has(x.value));updateDisclosureOptionState()}
+function setClauseChecks(values){const vals=new Set(Array.isArray(values)?values:[]);root.querySelectorAll('input[name="clause"]').forEach(x=>x.checked=vals.has(x.value))}
 function loadConfigurationObject(data){
  if(!data||typeof data!=='object'||!data.courseProfile)throw new Error('Invalid configuration');
  const p=data.courseProfile;
@@ -653,8 +636,9 @@ function loadConfigurationObject(data){
  selectedArch=savedArch;
  const archRadio=recGrid.querySelector(`input[name="archChoice"][value="${savedArch}"]`);if(archRadio)archRadio.checked=true;
  assessments=Array.isArray(data.assessments)&&data.assessments.length?data.assessments.map(a=>({name:a.name||'',level:levelText[a.level]?a.level:'learning',directed:!!a.directed,directedDesc:a.directedDesc||'',functions:Array.isArray(a.functions)?a.functions.filter(k=>aiFunctions[k]):[...(functionDefaults[a.level]||functionDefaults.learning)],studentLed:a.studentLed||'',conditions:a.conditions||''})):[newAssessment('learning')];
- disclosureSettings=normalizeDisclosureSettings(data.disclosureSettings);
- renderAssessments();renderClauses();setClauseChecks((data.clauses || data.safeguards)||[]);updateBlueprint();
+ const loadedClauses=Array.isArray(data.clauses)?[...data.clauses]:(Array.isArray(data.safeguards)?[...data.safeguards]:[]);
+ if(data.disclosureSettings&&data.disclosureSettings.reflection&&!loadedClauses.includes('reflection'))loadedClauses.push('reflection');
+ renderAssessments();renderClauses();setClauseChecks(loadedClauses);updateBlueprint();
  const versionWarning=(data.schemaVersion!==CONFIG_SCHEMA_VERSION||data.toolVersion!==TOOL_VERSION)?` This file was created with tool version ${data.toolVersion||'unknown'}; please review all settings.`:'';
  setConfigStatus(`Configuration loaded successfully.${versionWarning}`,!!versionWarning);
 }
@@ -746,11 +730,12 @@ const featureData={
     ]
   },
   clauses:{
-    title:'Fourteen Responsible-Use Clauses',
+    title:'Fifteen Responsible-Use Clauses',
     intro:'These cross-cutting clauses can apply across course archetypes and assessment levels. The Builder suggests a starting set that instructors can review and adapt.',
     items:[
-      ['AI Use Disclosure','Explain when and how AI contributed to producing assessed work.'],
+      ['AI Use Disclosure','Explain how AI participated, including the tool or model, purpose, affected parts or stages, nature and extent of contribution, and rationale for use.'],
       ['Citation','Attribute AI-generated material where required and consult underlying external sources directly before citing them.'],
+      ['Reflection on AI Use','Invite students to reflect on how AI affected their reasoning, understanding, decisions, or final work.'],
       ['Process Evidence','Request proportionate evidence of the AI-assisted process when it serves the learning objective.'],
       ['Group and Team Work','Clarify collective responsibility, disclosure, and handling of shared or peer materials.'],
       ['Verification and Human Accountability','Require verification of claims, calculations, references, assumptions, analysis, and recommendations.'],
