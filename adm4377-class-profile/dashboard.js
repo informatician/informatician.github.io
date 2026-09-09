@@ -59,7 +59,7 @@
       settled = true;
       cleanup();
       setStatus('The dashboard request timed out. Check the Apps Script URL, deployment access, and dashboard key.', true);
-    }, 12000);
+    }, 20000);
 
     window[callbackName] = payload => {
       if (settled) return;
@@ -100,7 +100,7 @@
     renderOpenResponses(data.openResponses || []);
 
     const generatedAt = data.generatedAt ? new Date(data.generatedAt) : new Date();
-    generatedAtEl.textContent = `Dashboard generated ${generatedAt.toLocaleString()} · Session: ${data.session || cfg.sessionId}`;
+    generatedAtEl.textContent = `Dashboard generated ${generatedAt.toLocaleString()} · Session: ${data.session || cfg.sessionId}${data.version ? ` · Service ${data.version}` : ''}`;
     setStatus(`Loaded ${data.n || 0} responses.`);
   }
 

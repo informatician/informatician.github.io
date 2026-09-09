@@ -72,46 +72,8 @@
     submitButton.disabled = true;
     submitButton.textContent = 'Submitting…';
 
-    let settled = false;
-    let transportForm = null;
-
-    const cleanup = () => {
-      window.removeEventListener('message', onMessage);
-      if (transportForm && transportForm.parentNode) transportForm.remove();
-    };
-
-    const finishSuccess = () => {
-      if (settled) return;
-      settled = true;
-      cleanup();
-      localStorage.setItem(storageKey, '1');
-      successBox.innerHTML = '<strong>Thank you.</strong> Your class profile has been submitted. You can now return to the class discussion.';
-      successBox.classList.remove('hidden');
-      form.querySelectorAll('input, textarea').forEach(el => el.disabled = true);
-      submitButton.textContent = 'Submitted';
-      successBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    };
-
-    const finishError = message => {
-      if (settled) return;
-      settled = true;
-      cleanup();
-      submitButton.disabled = false;
-      submitButton.textContent = 'Submit Class Profile';
-      showError(message || 'The submission did not complete. Please check your internet connection and try again.');
-    };
-
-    const onMessage = event => {
-      const data = event.data;
-      if (!data || data.source !== 'adm4377-survey-response' || data.responseId !== responseId) return;
-      if (data.ok) finishSuccess();
-      else finishError(data.message || 'The survey service returned an error.');
-    };
-    window.addEventListener('message', onMessage);
-
-    // A normal cross-origin HTML form POST avoids browser CORS complexity.
-    // The Apps Script response posts a success/error message back to this page.
-    transportForm = document.createElement('form');
+    // Submit using a normal HTML form POST. This works cross-origin without CORS.
+    const transportForm = document.createElement('form');
     transportForm.method = 'POST';
     transportForm.action = cfg.appsScriptUrl;
     transportForm.target = frame.name;
@@ -126,16 +88,111 @@
 
     try {
       transportForm.submit();
+      transportForm.remove();
     } catch (err) {
       console.error(err);
-      finishError();
+      finishError('The browser could not send the survey response. Please try again.');
       return;
     }
 
-    setTimeout(() => {
-      if (!settled) finishError('The survey service did not respond within 15 seconds. Please try once more.');
-    }, 15000);
+    // IMPORTANT: Apps Script HTML responses are sandboxed inside Google's own iframe,
+    // so they cannot reliably postMessage back to the GitHub parent page. Instead,
+    // verify the saved ResponseID through a read-only JSONP GET endpoint.
+    verifySavedResponse(responseId, 0);
   });
+
+  function verifySavedResponse(responseId, attempt) {
+    const maxAttempts = 10;
+    const delayMs = attempt === 0 ? 700 : 1400;
+
+    setTimeout(() => {
+      jsonpRequest({
+        action: 'verify',
+        session: cfg.sessionId,
+        responseId
+      }, 7000)
+        .then(result => {
+          if (result && result.ok === true && result.found === true) {
+            finishSuccess();
+            return;
+          }
+
+          if (attempt + 1 < maxAttempts) {
+            submitButton.textContent = 'Confirming submission…';
+            verifySavedResponse(responseId, attempt + 1);
+          } else {
+            finishError('Your response may have been saved, but the site could not confirm it. Please tell the instructor before submitting again.');
+          }
+        })
+        .catch(() => {
+          if (attempt + 1 < maxAttempts) {
+            submitButton.textContent = 'Confirming submission…';
+            verifySavedResponse(responseId, attempt + 1);
+          } else {
+            finishError('Your response may have been saved, but the site could not confirm it. Please tell the instructor before submitting again.');
+          }
+        });
+    }, delayMs);
+  }
+
+  function jsonpRequest(params, timeoutMs = 8000) {
+    return new Promise((resolve, reject) => {
+      const callbackName = `adm4377Verify_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+      const script = document.createElement('script');
+      const url = new URL(cfg.appsScriptUrl);
+      Object.entries(params).forEach(([key, value]) => url.searchParams.set(key, value));
+      url.searchParams.set('prefix', callbackName);
+      url.searchParams.set('_', Date.now());
+
+      let settled = false;
+      const cleanup = () => {
+        if (window[callbackName]) delete window[callbackName];
+        if (script.parentNode) script.parentNode.removeChild(script);
+      };
+
+      const timer = setTimeout(() => {
+        if (settled) return;
+        settled = true;
+        cleanup();
+        reject(new Error('Verification timed out.'));
+      }, timeoutMs);
+
+      window[callbackName] = result => {
+        if (settled) return;
+        settled = true;
+        clearTimeout(timer);
+        cleanup();
+        resolve(result);
+      };
+
+      script.onerror = () => {
+        if (settled) return;
+        settled = true;
+        clearTimeout(timer);
+        cleanup();
+        reject(new Error('Could not reach verification endpoint.'));
+      };
+
+      script.src = url.toString();
+      document.body.appendChild(script);
+    });
+  }
+
+  function finishSuccess() {
+    localStorage.setItem(storageKey, '1');
+    successBox.innerHTML = '<strong>Thank you.</strong> Your class profile has been submitted. You can now return to the class discussion.';
+    successBox.classList.remove('hidden');
+    form.querySelectorAll('input, textarea').forEach(el => el.disabled = true);
+    submitButton.disabled = true;
+    submitButton.textContent = 'Submitted';
+    successBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  function finishError(message) {
+    submitButton.disabled = false;
+    submitButton.textContent = 'Submit Class Profile';
+    showError(message || 'The submission did not complete. Please check your internet connection and try again.');
+  }
 
   function isConfigured() {
     return cfg.appsScriptUrl && /^https:\/\/script\.google\.com\/macros\/s\/.+\/exec/.test(cfg.appsScriptUrl);
@@ -184,6 +241,7 @@
 
   function clearMessages() {
     errorBox.classList.add('hidden');
+    successBox.classList.add('hidden');
   }
 
   function showError(message) {
