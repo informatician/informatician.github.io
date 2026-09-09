@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="light" />
+  <title>ADM4377 Class Digital Profile Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="page-shell">
+    <header class="dashboard-header">
+      <div>
+        <p class="eyebrow">ADM4377 · Instructor Dashboard</p>
+        <h1>Class Digital Profile</h1>
+        <p class="lede">A discussion view of the class’s academic backgrounds, work experiences, and perspectives on digital strategy.</p>
+      </div>
+      <div class="live-badge">Manual refresh</div>
+    </header>
+
+    <div class="dashboard-controls">
+      <input id="dashboardKey" type="password" autocomplete="off" placeholder="Dashboard key (set in Apps Script)" aria-label="Dashboard key" />
+      <button id="refreshButton" class="primary-button">Load / Refresh Results</button>
+      <button id="demoButton" class="secondary-button">Load Demo Data</button>
+      <a class="secondary-button" href="speaker-notes.html" target="_blank" rel="noopener">Instructor Notes</a>
+      <span id="dashboardStatus" class="status-text">Results not loaded yet.</span>
+    </div>
+
+    <section class="summary-grid" aria-label="Class summary">
+      <article class="summary-card">
+        <div class="summary-label">Responses</div>
+        <div id="summaryResponses" class="summary-value">—</div>
+      </article>
+      <article class="summary-card">
+        <div class="summary-label">Most Common Primary Option</div>
+        <div id="summaryPrimary" class="summary-value text">—</div>
+      </article>
+      <article class="summary-card">
+        <div class="summary-label">Top Transformation Barrier</div>
+        <div id="summaryBarrier" class="summary-value text">—</div>
+      </article>
+      <article class="summary-card">
+        <div class="summary-label">Digital Strategy Confidence</div>
+        <div id="summaryConfidence" class="summary-value">—</div>
+      </article>
+    </section>
+
+    <nav class="dashboard-tabs" aria-label="Dashboard sections">
+      <button class="tab-button active" data-panel="overview">Overview</button>
+      <button class="tab-button" data-panel="profile">Academic Profile</button>
+      <button class="tab-button" data-panel="experience">Work Experience</button>
+      <button class="tab-button" data-panel="digital">Digital Strategy Pulse</button>
+      <button class="tab-button" data-panel="open">Open Responses</button>
+    </nav>
+
+    <section id="panel-overview" class="dashboard-panel active">
+      <div class="panel-heading">
+        <div><h2>At a Glance</h2><p>Start here before moving into the detailed class profile.</p></div>
+      </div>
+      <div class="chart-grid">
+        <article class="chart-card"><h3 class="chart-title">Current / Recent Workplace: Business–Technology Relationship</h3><div id="chart-overview-q9"></div></article>
+        <article class="chart-card"><h3 class="chart-title">Digital Transformation Is Primarily a Technology Challenge</h3><div id="chart-overview-q10"></div></article>
+        <article class="chart-card wide"><h3 class="chart-title">Where Would the Class Invest the First $1 Million?</h3><div id="chart-overview-q12"></div></article>
+      </div>
+    </section>
+
+    <section id="panel-profile" class="dashboard-panel">
+      <div class="panel-heading">
+        <div><h2>Academic Profile</h2><p>Primary program, additional academic pathways, year of study, and career interests.</p></div>
+      </div>
+      <div class="chart-grid">
+        <article class="chart-card"><h3 class="chart-title">Q1 · Primary BCom Option / Program</h3><div id="chart-q1"></div></article>
+        <article class="chart-card"><h3 class="chart-title">Q2 · Additional Option, Microprogram, Minor, or Degree</h3><div id="chart-q2"></div></article>
+        <article class="chart-card"><h3 class="chart-title">Q3 · Year / Stage of Study</h3><div id="chart-q3"></div></article>
+        <article class="chart-card"><h3 class="chart-title">Q4 · Post-Graduation Career Interest</h3><div id="chart-q4"></div></article>
+      </div>
+    </section>
+
+    <section id="panel-experience" class="dashboard-panel">
+      <div class="panel-heading">
+        <div><h2>Work Experience</h2><p>Forms of experience, accumulated experience, sectors, and functional exposure.</p></div>
+      </div>
+      <div class="chart-grid">
+        <article class="chart-card"><h3 class="chart-title">Q5 · Types of Work Experience</h3><div id="chart-q5"></div></article>
+        <article class="chart-card"><h3 class="chart-title">Q6 · Approximate Total Work Experience</h3><div id="chart-q6"></div></article>
+        <article class="chart-card"><h3 class="chart-title">Q7 · Sectors Represented</h3><div id="chart-q7"></div></article>
+        <article class="chart-card"><h3 class="chart-title">Q8 · Functional Work Exposure</h3><div id="chart-q8"></div></article>
+      </div>
+    </section>
+
+    <section id="panel-digital" class="dashboard-panel">
+      <div class="panel-heading">
+        <div><h2>Digital Strategy Pulse</h2><p>Baseline views for discussion, and useful points of return later in the semester.</p></div>
+      </div>
+      <div class="chart-grid">
+        <article class="chart-card wide"><h3 class="chart-title">Q9 · Business–Technology Relationship in Current / Recent Workplace</h3><div id="chart-q9"></div></article>
+        <article class="chart-card"><h3 class="chart-title">Q10 · Digital Transformation as a Technology Challenge</h3><div id="chart-q10"></div></article>
+        <article class="chart-card"><h3 class="chart-title">Q11 · Biggest Transformation Obstacle</h3><div id="chart-q11"></div></article>
+        <article class="chart-card"><h3 class="chart-title">Q12 · First $1 Million of Digital Investment</h3><div id="chart-q12"></div></article>
+        <article class="chart-card"><h3 class="chart-title">Q13 · Technology with Greatest Strategic Impact</h3><div id="chart-q13"></div></article>
+        <article class="chart-card wide"><h3 class="chart-title">Q14 · Confidence Explaining Digital Strategy to a Senior Manager</h3><div id="chart-q14"></div></article>
+      </div>
+    </section>
+
+    <section id="panel-open" class="dashboard-panel">
+      <div class="panel-heading">
+        <div><h2>Optional Open Responses</h2><p>Use selectively for discussion. Responses are returned only after the correct dashboard key is supplied.</p></div>
+      </div>
+      <div class="callout">Quickly scan these before reading them aloud. Students were asked not to identify organizations or disclose confidential information, but free-text answers always merit instructor review.</div>
+      <div id="openResponses"><div class="empty-state">Load results to view responses.</div></div>
+    </section>
+
+    <p class="small-note" id="generatedAt"></p>
+  </main>
+
+  <script src="config.js"></script>
+  <script src="dashboard.js"></script>
+</body>
+</html>
